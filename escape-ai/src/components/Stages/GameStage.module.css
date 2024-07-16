@@ -1,0 +1,53 @@
+.container {
+    text-align: center;
+    padding: 20px;
+    transition: background-color 0.3s;
+  }
+  
+  .container.dark {
+    background-color: #333;
+    color: #ffffff;
+  }
+  
+  .transitionMessage {
+    font-size: 2rem;
+    font-weight: bold;
+    color: green;
+    animation: fadeInOut 3s;
+  }
+  
+  .options {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .option {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .option:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .selectedOption {
+    background-color: #f0f0f0;
+  }
+  
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  
