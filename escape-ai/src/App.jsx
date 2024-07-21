@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import UserForm from "./pages/UserForm/UserForm";
 import ThemeProvider from "./components/Theme/ThemeProvider";
-import ToggleThemeButton from "./components/Theme/ToggleThemeButton";
 import Header from "./components/Header/Header";
 import Introduction from "./pages/Introduction/Introduction";
 import PracticeStage from "./pages/PracticsStage/PracticeStage";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
-import Language from "./components/Language/Language";
 import Conclusion from "./pages/Conclusion/Conclusion";
 import GamePage from "./pages/GamePage/GamePage";
 import { useTranslation } from "react-i18next";
 import NavBar from "./components/NavBar/NavBar";
+import GlobalStyles from "./GlobalStyles";
+import { LanguageProvider } from "./context/LanguageContext";
+import CardMedia from "@mui/material/CardMedia";
+
 function App() {
   const { t } = useTranslation();
 
@@ -42,29 +44,36 @@ function App() {
 
   return (
     <ThemeProvider>
-      <CssBaseline />
-      <Box>
-        <NavBar />
-        {!gameStarted ? (
-          <Box sx={{ textAlign: "center", marginTop: "50px" }}>
-            <UserForm onSubmit={handleFormSubmit} />
-          </Box>
-        ) : (
-          <Box sx={{ textAlign: "center", marginTop: "50px" }}>
-            <Box sx={{ flexGrow: 1, mx: 2 }}>
-              <Normal>RTL normal behavior</Normal>
-              <Noflip>RTL noflip</Noflip>
+      <LanguageProvider>
+        <GlobalStyles />
+        <CssBaseline />
+        <Box>
+          <NavBar />
+
+          {!gameStarted ? (
+            <Box sx={{ textAlign: "center", marginTop: "50px" }}>
+              <Header text="welcome" variant="h2" />
+              <UserForm onSubmit={handleFormSubmit} />
             </Box>
-            <Header text={`ברוכים הבאים ${userData.name}`} varient="h2" />
-            {page === "intro" && <Introduction onStartGame={handleStartGame} />}
-            {page === "practice" && (
-              <PracticeStage onComplete={handleCompletePractice} />
-            )}
-            {page === "stages" && <GamePage onComplete={handleCompleteGame} />}
-            {page === "conclusion" && <Conclusion />}
-          </Box>
-        )}
-      </Box>
+          ) : (
+            <Box sx={{ textAlign: "center", marginTop: "50px" }}>
+              <Header text="welcome" variant="h2" />
+              <Header text={userData.name} variant="h3" />
+
+              {page === "intro" && (
+                <Introduction onStartGame={handleStartGame} />
+              )}
+              {page === "practice" && (
+                <PracticeStage onComplete={handleCompletePractice} />
+              )}
+              {page === "stages" && (
+                <GamePage onComplete={handleCompleteGame} />
+              )}
+              {page === "conclusion" && <Conclusion />}
+            </Box>
+          )}
+        </Box>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }

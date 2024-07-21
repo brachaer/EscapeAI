@@ -3,7 +3,7 @@ import {
   ThemeProvider as MuiThemeProvider,
   createTheme,
 } from "@mui/material/styles";
-import { amber, deepOrange, grey } from "@mui/material/colors";
+import { deepOrange, grey } from "@mui/material/colors";
 
 const ThemeContext = createContext();
 
@@ -23,8 +23,8 @@ const ThemeProvider = ({ children }) => {
           mode,
           ...(mode === "light"
             ? {
-                primary: amber,
-                divider: amber[200],
+                primary: deepOrange,
+                divider: deepOrange[200],
                 text: {
                   primary: grey[900],
                   secondary: grey[800],

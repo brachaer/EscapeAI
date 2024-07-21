@@ -1,6 +1,22 @@
 {
-    "welcome": "Welcome",
-    "choose_language": "Choose Language",
-    "escape_ai": "Escape AI"
+  "welcome": "Welcome",
+  "choose_language": "Choose Language",
+  "escape_ai": "Escape AI",
+  "name": "Name",
+  "interest_theme": "Interest Theme",
+  "number_of_stages": "Number of Stages",
+  "difficulty": "Difficulty",
+  "easy":"Easy",
+  "medium":"Medium",
+  "hard":"Hard",
+  "language": "Language",
+  "start_game": "Start Game",
+  "sign_in": "Sign In",
+  "required": "Required",
+  "please_select_number_between": "Please select a number between 3 and 10",
+  "intro":"Introduction",
+  "instructions": "Game Instructions:\\n1. You are trapped in a mysterious room that adapts to your actions.\\n2. Your goal is to escape the room by solving puzzles and finding clues.\\n3. Type your actions as simple sentences, such as 'look around' or 'check the bookshelf'.\\n4. The room will change according to your actions, so pay attention to the descriptions.\\n5. If you want to exit the game at any point, simply type 'exit'.\\n6. Use your imagination and problem-solving skills to escape. Good luck!",
+  "congratulations":"Congratulations",
+  "completed":"You have successfully completed Escape AI",
+  "thanks":"Thank you for playing"
 }
-  

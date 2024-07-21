@@ -1,25 +1,25 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Language from "../Language/Language";
 import ToggleThemeButton from "../Theme/ToggleThemeButton";
+import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
+import LogoImage from "../LogoImage/LogoImage";
 const NavBar = () => {
-  const { t, i18n } = useTranslation();
-
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    document.documentElement.setAttribute("dir", lng === "he" ? "rtl" : "ltr");
-  };
-
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          {t("escape_ai")}
+        <LogoImage src="../src/assets/escape_ai.jpeg" width="10%" />
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{
+            flexGrow: 1,
+          }}
+        >
+          Escape AI
         </Typography>
-        <Language />
+        <LanguageSwitcher />
         <ToggleThemeButton />
       </Toolbar>
     </AppBar>
