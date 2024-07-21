@@ -52,7 +52,6 @@ const UserForm = ({ onSubmit }) => {
       theme: "",
       numStages: "",
       difficulty: "",
-      language: "",
     },
     validate: (values) => validate(values, t),
     onSubmit: (values) => {
@@ -117,21 +116,7 @@ const UserForm = ({ onSubmit }) => {
               <MenuItem value="medium">{t("medium")}</MenuItem>
               <MenuItem value="hard">{t("hard")}</MenuItem>
             </Select>
-          </FormControl>
-          <FormControl variant="outlined" fullWidth>
-            <InputLabel>{t("language")}</InputLabel>
-            <Select
-              name="language"
-              value={formik.values.language}
-              onChange={formik.handleChange}
-              label={t("language")}
-            >
-              {languages.map((item) => (
-                <MenuItem key={item.value} value={item.value}>
-                  {item.label}
-                </MenuItem>
-              ))}
-            </Select>
+            <br />
           </FormControl>
           <Button type="submit" variant="contained">
             {t("start_game")}
