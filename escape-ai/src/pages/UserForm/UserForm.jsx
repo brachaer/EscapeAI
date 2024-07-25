@@ -11,11 +11,6 @@ import { styled } from "@mui/system";
 import Header from "../../components/Header/Header";
 import { useTranslation } from "react-i18next";
 
-const languages = [
-  { value: "hebrew", label: "עברית" },
-  { value: "english", label: "English" },
-];
-
 const Form = styled("form")({
   display: "flex",
   flexDirection: "column",
@@ -34,23 +29,17 @@ const validate = (values, t) => {
   if (!values.theme) {
     errors.theme = t("required");
   }
-  if (!values.numStages) {
-    errors.numStages = t("required");
-  } else if (values.numStages < 3 || values.numStages > 10) {
-    errors.numStages = t("please_select_number_between");
-  }
 
   return errors;
 };
 
 const UserForm = ({ onSubmit }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
       name: "",
       theme: "",
-      numStages: "",
       difficulty: "",
     },
     validate: (values) => validate(values, t),
@@ -87,19 +76,6 @@ const UserForm = ({ onSubmit }) => {
             onChange={formik.handleChange}
             error={formik.touched.theme && Boolean(formik.errors.theme)}
             helperText={formik.touched.theme && formik.errors.theme}
-            required
-            margin="normal"
-          />
-          <TextField
-            fullWidth
-            label={t("number_of_stages")}
-            variant="outlined"
-            type="number"
-            name="numStages"
-            value={formik.values.numStages}
-            onChange={formik.handleChange}
-            error={formik.touched.numStages && Boolean(formik.errors.numStages)}
-            helperText={formik.touched.numStages && formik.errors.numStages}
             required
             margin="normal"
           />

@@ -9,7 +9,7 @@ const NavBar = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <LogoImage src="../src/assets/escape_ai.jpeg" width="10%" />
+        <LogoImage src="../src/assets/escape-logo.jpeg" width="10%" />
         <Typography
           variant="h6"
           component="div"

@@ -3,20 +3,16 @@ import UserForm from "./pages/UserForm/UserForm";
 import ThemeProvider from "./components/Theme/ThemeProvider";
 import Header from "./components/Header/Header";
 import Introduction from "./pages/Introduction/Introduction";
-import PracticeStage from "./pages/PracticsStage/PracticeStage";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Conclusion from "./pages/Conclusion/Conclusion";
 import GamePage from "./pages/GamePage/GamePage";
-import { useTranslation } from "react-i18next";
 import NavBar from "./components/NavBar/NavBar";
 import GlobalStyles from "./GlobalStyles";
 import { LanguageProvider } from "./context/LanguageContext";
-import CardMedia from "@mui/material/CardMedia";
+import "@fontsource/roboto/300.css";
 
 function App() {
-  const { t } = useTranslation();
-
   const [gameStarted, setGameStarted] = useState(false);
   const [userData, setUserData] = useState(null);
   const [page, setPage] = useState("intro");
@@ -24,9 +20,6 @@ function App() {
   const handleCompleteGame = () => {
     setGameStarted(true);
     setPage("conclusion");
-  };
-  const handleCompletePractice = () => {
-    setPage("stages");
   };
 
   const handleFormSubmit = (formData) => {
@@ -37,7 +30,7 @@ function App() {
   };
 
   const handleStartGame = () => {
-    setPage("practice");
+    setPage("stages");
 
     console.log("Starting game...");
   };
@@ -62,9 +55,6 @@ function App() {
 
               {page === "intro" && (
                 <Introduction onStartGame={handleStartGame} />
-              )}
-              {page === "practice" && (
-                <PracticeStage onComplete={handleCompletePractice} />
               )}
               {page === "stages" && (
                 <GamePage onComplete={handleCompleteGame} />
