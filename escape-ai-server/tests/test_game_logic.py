@@ -27,6 +27,33 @@ def test_start_game(app, mocker, data):
     
     assert all(key in result for key in ["message", "description", "options", "state_id"]), "Missing keys in start_game result"
 
+# @pytest.mark.parametrize("data, expected", [
+#     (
+#         {"state_id": str(VALID_OBJECT_ID), "lang": "en", "choice": "1"},
+#         {"description": "New description", "options": [], "exit": False}
+#     ),
+#     (
+#         {"state_id": str(VALID_OBJECT_ID), "lang": "en", "choice": "exit"},
+#         {"description": "Congratulations, You've escaped the room.", "options": [], "exit": True}
+#     ),
+# ])
+# def test_process_action(app, mocker, data, expected):
+#     mocker.patch('app.game_logic.get_validated_state_id', return_value=VALID_OBJECT_ID)
+#     mocker.patch('app.game_logic.game_state.get_state', return_value={
+#         "name": "Player",
+#         "current_state": "Current state",
+#         "options": [{"id": "1", "description": "Option 1", "is_exit": False}, {"id": "exit", "description": "Exit", "is_exit": True}],
+#         "theme": "Fantasy",
+#         "difficulty": "Easy"
+#     })
+#     mocker.patch('app.game_logic.process_user_action', return_value="New description")
+#     mocker.patch('app.game_logic.extract_description_and_options', return_value=("New description", []))
+    
+#     with app.app_context():
+#         result = process_action(data)
+    
+#     assert result == expected, f"Expected result to be {expected}, got {result}"
+
 @pytest.mark.parametrize("data, expected", [
     (
         {"state_id": str(VALID_OBJECT_ID), "lang": "en", "choice": "1"},
@@ -48,7 +75,8 @@ def test_process_action(app, mocker, data, expected):
     })
     mocker.patch('app.game_logic.process_user_action', return_value="New description")
     mocker.patch('app.game_logic.extract_description_and_options', return_value=("New description", []))
-    
+    mocker.patch('app.game_logic.emit_game_update')  
+
     with app.app_context():
         result = process_action(data)
     

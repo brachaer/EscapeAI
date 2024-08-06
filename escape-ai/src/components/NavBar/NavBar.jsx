@@ -7,7 +7,7 @@ import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import LogoImage from "../LogoImage/LogoImage";
 const NavBar = () => {
   return (
-    <AppBar position="static">
+    <AppBar position="absolute">
       <Toolbar>
         <LogoImage src="../src/assets/escape-logo.jpeg" width="10%" />
         <Typography

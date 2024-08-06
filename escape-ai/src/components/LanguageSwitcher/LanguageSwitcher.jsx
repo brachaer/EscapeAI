@@ -9,7 +9,6 @@ import {
   Typography,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
 import Flag from "react-flagkit";
 
 const LanguageSwitcher = () => {
@@ -36,7 +35,7 @@ const LanguageSwitcher = () => {
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography variant="body1" sx={{ mr: 1 }}>
-            {language === "he" ? "עברית" : "English"}
+            {language === "he" ? "HE" : "EN"}
           </Typography>
           <ExpandMoreIcon />
         </Box>
@@ -44,13 +43,13 @@ const LanguageSwitcher = () => {
       <Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
         <MenuItem onClick={() => handleClose("en")}>
           <Flag country="US" />
-          <ListItemText primary="English" />
+          <ListItemText primary="EN" />
         </MenuItem>
         <MenuItem onClick={() => handleClose("he")}>
           <Flag country="IL" />
-          <ListItemText primary="עברית" />
+          <ListItemText primary="HE" />
         </MenuItem>
-      </Menu>{" "}
+      </Menu>
     </div>
   );
 };

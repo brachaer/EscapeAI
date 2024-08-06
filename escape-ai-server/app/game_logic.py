@@ -2,6 +2,7 @@ from bson import ObjectId
 from app.models import GameState
 from app.utils import translate, validate_language, extract_description_and_options
 from app.language_chains import generate_room_description, process_user_action
+from flask_socketio import emit
 
 DEFAULT_LANG = "en"
 
@@ -18,7 +19,8 @@ def get_validated_state_id(state_id):
     if isinstance(state_id, str):
         try:
             return ObjectId(state_id)
-        except:
+        except Exception as e:
+            print(f"ObjectId conversion error: {e}")
             return None
     return state_id
 
@@ -46,9 +48,13 @@ def start_game(data):
         "state_id": str(state_id)
     }
 
+def emit_game_update(result):
+    emit('game_update', result)
+
 def process_action(data):
     state_id = get_validated_state_id(data.get('state_id'))
     lang = data.get('lang')
+    
     if not state_id:
         return {"error": "Invalid state_id format"}, 400
 
@@ -58,11 +64,13 @@ def process_action(data):
     
     chosen_option = next((opt for opt in current_state['options'] if opt['id'] == data.get('choice')), None)
     if chosen_option and chosen_option['is_exit']:
-        return {
+        result = {
             "description": translate("exit", lang),
             "options": [],
             "exit": True
         }
+        emit_game_update(result)
+        return result
 
     result = process_user_action({
         "name": current_state['name'],
@@ -80,8 +88,10 @@ def process_action(data):
         "options": new_options
     })
 
-    return {
+    result = {
         "description": new_description,
         "options": new_options,
         "exit": False
     }
+    emit_game_update(result)
+    return result

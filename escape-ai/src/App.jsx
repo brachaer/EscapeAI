@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import UserForm from "./pages/UserForm/UserForm";
-import ThemeProvider from "./components/Theme/ThemeProvider";
-import Header from "./components/Header/Header";
+import EscapeRoom from "./pages/EscapeRoom/EscapeRoom";
 import Introduction from "./pages/Introduction/Introduction";
+import Conclusion from "./pages/Conclusion/Conclusion";
+import ThemeProvider from "./components/Theme/ThemeProvider";
+import NavBar from "./components/NavBar/NavBar";
+import Header from "./components/Header/Header";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
-import Conclusion from "./pages/Conclusion/Conclusion";
-import GamePage from "./pages/GamePage/GamePage";
-import NavBar from "./components/NavBar/NavBar";
+import Paper from "@mui/material/Paper";
 import GlobalStyles from "./GlobalStyles";
 import { LanguageProvider } from "./context/LanguageContext";
-import "@fontsource/roboto/300.css";
+import videoSource from "./assets/escape_bg_desktop.mp4";
+import "./App.css";
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false);
@@ -23,6 +25,7 @@ function App() {
   };
 
   const handleFormSubmit = (formData) => {
+    console.log(formData);
     setUserData(formData);
 
     setGameStarted(true);
@@ -30,7 +33,7 @@ function App() {
   };
 
   const handleStartGame = () => {
-    setPage("stages");
+    setPage("game");
 
     console.log("Starting game...");
   };
@@ -41,25 +44,33 @@ function App() {
         <GlobalStyles />
         <CssBaseline />
         <Box>
-          <NavBar />
+          <video autoPlay loop muted className="background-video">
+            <source src={videoSource} type="video/mp4" />
+            Your browser does not support video.
+          </video>
 
+          <NavBar />
           {!gameStarted ? (
-            <Box sx={{ textAlign: "center", marginTop: "50px" }}>
-              <Header text="welcome" variant="h2" />
-              <UserForm onSubmit={handleFormSubmit} />
+            <Box className="content-container">
+              <Paper elevation={10} className="paper">
+                <Header text="welcome" variant="h2" />
+                <UserForm onSubmit={handleFormSubmit} />
+              </Paper>
             </Box>
           ) : (
-            <Box sx={{ textAlign: "center", marginTop: "50px" }}>
-              <Header text="welcome" variant="h2" />
-              <Header text={userData.name} variant="h3" />
-
-              {page === "intro" && (
-                <Introduction onStartGame={handleStartGame} />
-              )}
-              {page === "stages" && (
-                <GamePage onComplete={handleCompleteGame} />
-              )}
-              {page === "conclusion" && <Conclusion />}
+            <Box className="content-container">
+              <Paper elevation={10} className="paper">
+                {page === "intro" && (
+                  <Introduction onStartGame={handleStartGame} />
+                )}
+                {page === "game" && (
+                  <EscapeRoom
+                    initialData={userData}
+                    onComplete={handleCompleteGame}
+                  />
+                )}
+                {page === "conclusion" && <Conclusion />}
+              </Paper>
             </Box>
           )}
         </Box>

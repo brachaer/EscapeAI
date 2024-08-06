@@ -25,6 +25,10 @@ const ThemeProvider = ({ children }) => {
             ? {
                 primary: deepOrange,
                 divider: deepOrange[200],
+                background: {
+                  default: grey[100],
+                  paper: grey[200],
+                },
                 text: {
                   primary: grey[900],
                   secondary: grey[800],
@@ -35,7 +39,7 @@ const ThemeProvider = ({ children }) => {
                 divider: deepOrange[700],
                 background: {
                   default: grey[900],
-                  paper: deepOrange[900],
+                  paper: grey[800],
                 },
                 text: {
                   primary: "#fff",

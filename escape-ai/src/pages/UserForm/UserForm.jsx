@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
@@ -10,6 +10,7 @@ import InputLabel from "@mui/material/InputLabel";
 import { styled } from "@mui/system";
 import Header from "../../components/Header/Header";
 import { useTranslation } from "react-i18next";
+import { useLanguage } from "../../context/LanguageContext";
 
 const Form = styled("form")({
   display: "flex",
@@ -35,24 +36,30 @@ const validate = (values, t) => {
 
 const UserForm = ({ onSubmit }) => {
   const { t } = useTranslation();
+  const { language } = useLanguage();
 
   const formik = useFormik({
     initialValues: {
+      lang: language,
       name: "",
       theme: "",
       difficulty: "",
     },
     validate: (values) => validate(values, t),
     onSubmit: (values) => {
+      console.log("Submitted values:", values);
       onSubmit(values);
     },
   });
 
+  useEffect(() => {
+    formik.setFieldValue("lang", language);
+  }, [language]);
+
   return (
     <Grid container justifyContent="center">
       <Grid item xs={12} sm={6}>
-        <Header text={t("sign_in")} variant="h2" />
-
+        <Header text="sign_in" variant="h2" />
         <Form onSubmit={formik.handleSubmit}>
           <TextField
             fullWidth
