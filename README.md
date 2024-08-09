@@ -4,7 +4,7 @@
 ## Technologies Used
 **Frontend:** React, Material-UI
 <br/>
-**Backend:** Python (Flask), LangChain-OpenAI API, MongoDB
+**Backend:** Python (Flask), Flask-SocketIO, LangChain-OpenAI API, MongoDB
 <br/>
 ## Overview
 EscapeAI is a React-based web application that simulates an escape room adventure. <br/>
@@ -53,3 +53,16 @@ Open your browser and navigate to http://localhost:3000 to view the application.
 **Navigate Stages:** Progress through each stage by solving puzzles and challenges.<br/>
 **Interact:** Use intuitive controls to interact with the game environment and solve puzzles.<br/>
 **Complete the Escape:** Reach the final stage to complete the escape and celebrate your victory!<br/>
+
+## Real-Time Communication
+EscapeAI uses Socket.IO to facilitate real-time communication between the client and server.<br/> 
+This allows for instant updates and interactions within the game.<br/>
+
+### Key features include:
+
+**Dynamic Updates:** Get live updates on game progress and other interactions.<br/>
+**Seamless Interaction:** Engage with game elements and receive feedback in real time, enhancing the overall experience.<br/>
+## How It Works:
+**Server-Side:** The server uses Flask-SocketIO to handle real-time communication.<br/> It listens for events and messages from clients, processes them, and sends responses accordingly.<br/>
+**Client-Side:** The React client connects to the server using the Socket.IO client library.<br/> It sends and receives events to update the game state and interface in real time.<br/>
+
