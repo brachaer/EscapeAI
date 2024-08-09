@@ -5,16 +5,26 @@ import Typography from "@mui/material/Typography";
 import ToggleThemeButton from "../Theme/ToggleThemeButton";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import LogoImage from "../LogoImage/LogoImage";
+import { useTheme } from "@mui/material/styles";
+
 const NavBar = () => {
+  const theme = useTheme();
   return (
-    <AppBar position="absolute">
-      <Toolbar>
-        <LogoImage src="../src/assets/escape-logo.jpeg" width="10%" />
+    <AppBar
+      position="absolute"
+      sx={{
+        backgroundColor: theme.palette.background.header,
+        padding: 1,
+      }}
+    >
+      <Toolbar variant="dense">
+        <LogoImage src="../src/assets/escape-logo.jpeg" width="8%" />
         <Typography
-          variant="h6"
+          variant="h3"
           component="div"
           sx={{
             flexGrow: 1,
+            marginLeft: 1,
           }}
         >
           Escape AI

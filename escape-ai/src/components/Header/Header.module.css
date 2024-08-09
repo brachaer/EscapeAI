@@ -16,5 +16,7 @@
     margin-top: 20px;
     margin-bottom: 20px;
     animation: fadeIn 1s ease-out forwards;
+    font-optical-sizing: auto;
+    font-style: normal;  
   }
   

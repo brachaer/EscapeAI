@@ -3,10 +3,11 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  overflow: hidden; /* Ensure content fits within the viewport */
 }
 
 .background-video {
-  position: absolute;
+  position: fixed; /* Change to fixed to cover the entire viewport */
   top: 0;
   left: 0;
   width: 100%;
@@ -20,20 +21,37 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100vh; /* Full viewport height */
   z-index: 1;
 }
 
 .paper {
-  padding: 32px;
+  padding: 40px;
   max-width: 600px;
   width: 90%;
-  opacity: 90%;
-  border-radius: 8px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-shadow: 
+    0 10px 20px rgba(0, 0, 0, 0.1),
+    0 6px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 1px solid rgba(42, 230, 230, 0.592);
+  backdrop-filter: blur(10px);
+  margin: 0 auto;
+  margin-top: 60px; 
 }
 
-
+.paper::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  z-index: -1;
+  opacity: 0.5;
+  border-radius: 22px;
+}

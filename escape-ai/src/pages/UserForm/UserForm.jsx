@@ -47,7 +47,7 @@ const UserForm = ({ onSubmit }) => {
     },
     validate: (values) => validate(values, t),
     onSubmit: (values) => {
-      console.log("Submitted values:", values);
+      console.log("Current language:", language);
       onSubmit(values);
     },
   });
@@ -59,7 +59,7 @@ const UserForm = ({ onSubmit }) => {
   return (
     <Grid container justifyContent="center">
       <Grid item xs={12} sm={6}>
-        <Header text="sign_in" variant="h2" />
+        <Header text="sign_in" variant="h3" />
         <Form onSubmit={formik.handleSubmit}>
           <TextField
             fullWidth

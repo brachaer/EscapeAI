@@ -1,50 +1,62 @@
-import React, { useState } from "react";
-import Typography from "@mui/material/Typography";
+import React from "react";
 import Button from "@mui/material/Button";
-import styles from "./Introduction.module.css";
 import Header from "../../components/Header/Header";
 import { useTranslation } from "react-i18next";
 import { Container } from "@mui/system";
-import { Box } from "@mui/system";
-import TypewriterLine from "../../components/Typewriter/TypewriterLine";
+import MyText from "../../components/MyText/MyText";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Box from "@mui/material/Box";
 
 const Introduction = ({ onStartGame }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const handleStartGame = () => {
-    console.log("Starting game...");
+    console.log("Current language:", i18n.language);
     onStartGame();
   };
-  const instructions = t("instructions", { returnObjects: true });
-  const [currentInstructionIndex, setCurrentInstructionIndex] = useState(0);
 
-  const handleComplete = () => {
-    if (currentInstructionIndex < instructions.length - 1) {
-      setCurrentInstructionIndex((prevIndex) => prevIndex + 1);
-    } else {
-      console.log("All instructions displayed!");
-    }
-  };
+  const instructions = t("instructions", { returnObjects: true });
 
   return (
-    <Container
-      classes={styles.Container}
-      maxWidth="sm"
-      sx={{ p: 2, border: "2px solid grey", bgcolor: "babackground.default" }}
-    >
+    <Container maxWidth="sm" sx={{ p: 2, bgcolor: "babackground.default" }}>
       <Header text="intro" variant="h3" />
-      <Box>
+      <Header text="welcome_intro" variant="h5" />
+      <List
+        component="ol"
+        sx={{
+          "& .MuiListItem-root": {
+            display: "flex",
+            flexDirection: i18n.language === "he" ? "row-reverse" : "row",
+            alignItems: "center",
+          },
+          "& .MuiListItemIcon-root": {
+            minWidth: "30px",
+          },
+        }}
+      >
         {instructions.map((instruction, index) => (
-          <div key={index}>
-            {index < currentInstructionIndex && (
-              <Typography variant="body1">{instruction}</Typography>
-            )}
-            {index === currentInstructionIndex && (
-              <TypewriterLine text={instruction} onComplete={handleComplete} />
-            )}
-          </div>
+          <ListItem key={index}>
+            <ListItemIcon>
+              <Box mr={2}>
+                <MyText
+                  text={
+                    i18n.language === "en" ? index + 1 + "." : "." + (index + 1)
+                  }
+                  variant="body1"
+                />
+              </Box>
+            </ListItemIcon>
+            <ListItemText>{instruction}</ListItemText>
+          </ListItem>
         ))}
-      </Box>
+      </List>
+      <Header text="goal_title" variant="h5" />
+      <MyText text="goal_intro" variant="body1" />
+      <Header text="good_luck" variant="h5" />
+
       <Button variant="contained" color="primary" onClick={handleStartGame}>
         {t("start_game")}{" "}
       </Button>

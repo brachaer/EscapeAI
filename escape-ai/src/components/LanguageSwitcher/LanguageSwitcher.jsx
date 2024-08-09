@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLanguage } from "../../context/LanguageContext";
+import { useTheme } from "../Theme/ThemeProvider";
 import {
   IconButton,
   Menu,
@@ -8,21 +8,26 @@ import {
   Box,
   Typography,
 } from "@mui/material";
+import { useLanguage } from "../../context/LanguageContext";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Flag from "react-flagkit";
 
 const LanguageSwitcher = () => {
   const { language, toggleLanguage } = useLanguage();
+  const { lang, setLang } = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
+
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
+    console.log(lang, language);
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (lang) => {
-    if (lang) {
-      toggleLanguage(lang);
+  const handleClose = (selectedLang) => {
+    if (selectedLang) {
+      setLang(selectedLang);
+      toggleLanguage(selectedLang);
     }
     setAnchorEl(null);
   };
@@ -35,12 +40,12 @@ const LanguageSwitcher = () => {
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography variant="body1" sx={{ mr: 1 }}>
-            {language === "he" ? "HE" : "EN"}
+            {lang && language === "he" ? "HE" : "EN"}
           </Typography>
           <ExpandMoreIcon />
         </Box>
       </IconButton>
-      <Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
+      <Menu anchorEl={anchorEl} open={open} onClose={() => handleClose()}>
         <MenuItem onClick={() => handleClose("en")}>
           <Flag country="US" />
           <ListItemText primary="EN" />
