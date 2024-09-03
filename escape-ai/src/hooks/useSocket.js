@@ -1,15 +1,16 @@
 import { useEffect, useState, useCallback } from "react";
 import io from "socket.io-client";
 
-// const socket = io("http://localhost:5000");
-
 const useSocket = (url) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
     const newSocket = io(url);
     setSocket(newSocket);
-    return () => newSocket.close();
+
+    return () => {
+      newSocket.close();
+    };
   }, [url]);
 
   const emit = useCallback(
@@ -33,7 +34,13 @@ const useSocket = (url) => {
     [socket]
   );
 
-  return { socket, emit, on, off };
+  const disconnect = useCallback(() => {
+    if (socket) {
+      socket.disconnect();
+    }
+  }, [socket]);
+
+  return { socket, emit, on, off, disconnect };
 };
 
 export default useSocket;

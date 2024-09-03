@@ -1,4 +1,4 @@
-from flask_socketio import emit
+from flask_socketio import emit, disconnect
 from app.game_logic import start_game, process_action
 
 def register_socket_events(socketio):
@@ -16,6 +16,12 @@ def register_socket_events(socketio):
         result = process_action(data)
         emit('action_result', result)
 
+    @socketio.on('end_game')
+    def handle_end_game():
+        emit('game_ended', {'message': 'Game has ended'})
+        disconnect()
+        print('Game ended, client disconnected')
+        
     @socketio.on('disconnect')
     def handle_disconnect():
         print('Client disconnected')

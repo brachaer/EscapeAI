@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Typography,
-  Paper,
-  Button,
-  Grid,
-  CircularProgress,
-  Alert,
-} from "@mui/material";
+import { Container, Paper } from "@mui/material";
 import useSocket from "../../hooks/useSocket";
+import GameContent from "../../components/GameContent/GameContent";
+import GameEnd from "../../components/GameEnd/GameEnd";
+import Loading from "../../components/Loading/Loading";
+import Header from "../../components/Header/Header";
+import {
+  handleGameStarted,
+  handleActionResult,
+  handleGameEnded,
+} from "./socketHandlers";
 
-const EscapeRoom = ({ initialData, onComplete }) => {
-  const { emit, on, off } = useSocket("http://localhost:5000");
+const EscapeRoom = ({ initialData }) => {
+  const { emit, disconnect, on, off } = useSocket("http://localhost:5000");
   const [gameState, setGameState] = useState({
     description: "",
     options: [],
@@ -27,55 +28,20 @@ const EscapeRoom = ({ initialData, onComplete }) => {
       startGame();
     });
 
-    on("game_started", (data) => {
-      if (data.error) {
-        setGameState((prevState) => ({
-          ...prevState,
-          error: data.error,
-          isLoading: false,
-        }));
-      } else {
-        setGameState({
-          description: data.description,
-          options: data.options || [],
-          isGameOver: false,
-          isLoading: false,
-          error: null,
-        });
-        setStateId(data.state_id);
-      }
-      console.log("Game started", data);
-    });
-
-    on("action_result", (data) => {
-      if (data.error) {
-        setGameState((prevState) => ({
-          ...prevState,
-          error: data.error,
-          isLoading: false,
-        }));
-      } else {
-        setGameState((prevState) => ({
-          ...prevState,
-          description: data.description,
-          options: data.options || [],
-          isGameOver: data.exit,
-          isLoading: false,
-          error: null,
-        }));
-        if (data.exit) {
-          onComplete();
-        }
-      }
-      console.log("Action result", data);
-    });
+    on("game_started", (data) =>
+      handleGameStarted(data, setGameState, setStateId)
+    );
+    on("action_result", (data) => handleActionResult(data, setGameState, emit));
+    on("game_ended", (data) => handleGameEnded(data, disconnect));
 
     return () => {
       off("connect");
       off("game_started");
       off("action_result");
+      off("game_ended");
+      disconnect();
     };
-  }, [on, off, onComplete]);
+  }, [on, off, emit, disconnect]);
 
   const startGame = () => {
     setGameState((prevState) => ({
@@ -101,60 +67,28 @@ const EscapeRoom = ({ initialData, onComplete }) => {
   };
 
   if (gameState.isLoading) {
-    return (
-      <Container maxWidth="sm">
-        <Paper
-          elevation={3}
-          style={{ padding: "20px", marginTop: "20px", textAlign: "center" }}
-        >
-          <CircularProgress />
-          <Typography variant="h6" style={{ marginTop: "10px" }}>
-            Loading...
-          </Typography>
-        </Paper>
-      </Container>
-    );
+    return <Loading />;
   }
 
   return (
     <Container maxWidth="sm">
       <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
-        <Typography variant="h4" gutterBottom>
-          Escape AI
-        </Typography>
-        {gameState.error && (
-          <Alert severity="error" style={{ marginBottom: "20px" }}>
-            {gameState.error}
-          </Alert>
-        )}
-        <Typography variant="body1" paragraph>
-          {gameState.description}
-        </Typography>
-        <Grid container spacing={2}>
-          {gameState.options &&
-            gameState.options.map((option) => (
-              <Grid item xs={12} key={option.id}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  onClick={() => handleAction(option.id)}
-                  disabled={gameState.isGameOver || gameState.error || !stateId}
-                >
-                  {option.description}
-                </Button>
-              </Grid>
-            ))}
-        </Grid>
-        {(gameState.isGameOver || gameState.error) && (
-          <div style={{ marginTop: "20px", textAlign: "center" }}>
-            <Typography variant="h5" gutterBottom>
-              {gameState.isGameOver ? "Game Over!" : "Error Occurred"}
-            </Typography>
-            <Button variant="contained" color="secondary" onClick={startGame}>
-              Start New Game
-            </Button>
-          </div>
+        <Header text={"Escape AI"} variant={"h4"} />
+        {gameState.isGameOver || gameState.error ? (
+          <GameEnd
+            description={gameState.description}
+            isGameOver={gameState.isGameOver}
+            startGame={startGame}
+          />
+        ) : (
+          <GameContent
+            description={gameState.description}
+            options={gameState.options}
+            handleAction={handleAction}
+            isGameOver={gameState.isGameOver}
+            error={gameState.error}
+            stateId={stateId}
+          />
         )}
       </Paper>
     </Container>
