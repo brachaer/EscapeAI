@@ -13,28 +13,31 @@ FULL_TEXT = f"{DESCRIPTION_TEXT}\n---\n{OPTIONS_TEXT}"
 @pytest.mark.parametrize("lang, expected", [
     ('en', 'en'),
     ('he', 'he'),
-    ('de', 'en'), 
+    ('de', 'en'),
 ])
 def test_validate_language(lang, expected):
-    assert validate_language(lang) == expected, f"Expected language for '{lang}' to be '{expected}'"
+    assert validate_language(lang) == expected
 
 def test_translate(mocker):
     mocker.patch('app.utils.TRANSLATIONS', TRANSLATIONS_MOCK)
-    
-    assert translate('welcome', 'en') == TRANSLATIONS_MOCK['en']['welcome'], "Translation mismatch for 'en'"
-    assert translate('welcome', 'he') == TRANSLATIONS_MOCK['he']['welcome'], "Translation mismatch for 'he'"
+    assert translate('welcome', 'en') == TRANSLATIONS_MOCK['en']['welcome']
+    assert translate('welcome', 'he') == TRANSLATIONS_MOCK['he']['welcome']
 
-def test_extract_description_and_options():
-    description, options = extract_description_and_options(FULL_TEXT)
-    
-    assert description == DESCRIPTION_TEXT, f"Expected description to be '{DESCRIPTION_TEXT}', got '{description}'"
-    assert len(options) == 2, f"Expected 2 options, got {len(options)}"
-    assert options[0]['id'] == 'Option 1', "First option ID mismatch"
-    assert options[1]['is_exit'] == True, "Second option exit status mismatch"
+@pytest.mark.parametrize("full_text, expected_description, expected_options", [
+    (FULL_TEXT, DESCRIPTION_TEXT, [
+        {'id': 'Option 1', 'description': 'Description 1', 'is_exit': False},
+        {'id': 'Option 2', 'description': 'Description 2', 'is_exit': True}
+    ]),
+])
+def test_extract_description_and_options(full_text, expected_description, expected_options):
+    description, options = extract_description_and_options(full_text)
+    assert description == expected_description
+    assert len(options) == len(expected_options)
+    for option, expected in zip(options, expected_options):
+        assert option == expected
 
 def test_parse_options():
     options = parse_options(OPTIONS_TEXT)
-    
-    assert len(options) == 2, f"Expected 2 options, got {len(options)}"
-    assert options[0] == {'id': 'Option 1', 'description': 'Description 1', 'is_exit': False}, "First option mismatch"
-    assert options[1] == {'id': 'Option 2', 'description': 'Description 2', 'is_exit': True}, "Second option mismatch"
+    assert len(options) == 2
+    assert options[0] == {'id': 'Option 1', 'description': 'Description 1', 'is_exit': False}
+    assert options[1] == {'id': 'Option 2', 'description': 'Description 2', 'is_exit': True}

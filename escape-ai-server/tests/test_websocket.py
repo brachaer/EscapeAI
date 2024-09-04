@@ -7,32 +7,34 @@ state_id = None
 
 @sio.event
 async def connect():
-    print('Connection established')
+    pass  
 
 @sio.event
 async def disconnect():
-    print('Disconnected from server')
+    pass  
 
 @sio.event
 async def game_started(data):
-    print('Game started:', data)
     global state_id
     state_id = data['state_id']
     await sio.emit('game_action', {'state_id': state_id, 'choice': data['options'][0]['id'], 'lang': 'en'})
 
 @sio.event
 async def action_result(data):
-    print('Action result:', data)
     if not data['exit']:
         await sio.emit('game_action', {'state_id': state_id, 'choice': data['options'][0]['id'], 'lang': 'en'})
     else:
-        await sio.disconnect()
+        await sio.emit('end_game') 
+
+@sio.event
+async def game_ended(data):
+    await sio.disconnect()
 
 @pytest.mark.asyncio
 async def test_game_flow():
     await sio.connect('http://localhost:5000')
     await sio.emit('start_game', {'lang': 'en', 'name': 'TestPlayer', 'theme': 'space', 'difficulty': 'medium'})
-    await asyncio.sleep(5)  # Give some time for the game to progress
+    await asyncio.sleep(1)  
     assert sio.connected
     await sio.disconnect()
 
