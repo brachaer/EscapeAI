@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Container, Paper } from "@mui/material";
+import { Container, Paper, Alert } from "@mui/material";
 import useSocket from "../../hooks/useSocket";
 import GameContent from "../../components/GameContent/GameContent";
 import GameEnd from "../../components/GameEnd/GameEnd";
 import Loading from "../../components/Loading/Loading";
-import Header from "../../components/Header/Header";
 import {
   handleGameStarted,
   handleActionResult,
@@ -22,27 +21,6 @@ const EscapeRoom = ({ initialData }) => {
   });
   const [stateId, setStateId] = useState(null);
 
-  useEffect(() => {
-    on("connect", () => {
-      console.log("Connected to server");
-      startGame();
-    });
-
-    on("game_started", (data) =>
-      handleGameStarted(data, setGameState, setStateId)
-    );
-    on("action_result", (data) => handleActionResult(data, setGameState, emit));
-    on("game_ended", (data) => handleGameEnded(data, disconnect));
-
-    return () => {
-      off("connect");
-      off("game_started");
-      off("action_result");
-      off("game_ended");
-      disconnect();
-    };
-  }, [on, off, emit, disconnect]);
-
   const startGame = () => {
     setGameState((prevState) => ({
       ...prevState,
@@ -52,6 +30,41 @@ const EscapeRoom = ({ initialData }) => {
     setStateId(null);
     emit("start_game", initialData);
   };
+
+  useEffect(() => {
+    const handleConnect = () => {
+      console.log("Connected to server");
+      startGame();
+    };
+
+    const handleGameStartedEvent = (data) => {
+      console.log("Game started:", data);
+      handleGameStarted(data, setGameState, setStateId);
+    };
+
+    const handleActionResultEvent = (data) => {
+      console.log("Action result:", data);
+      handleActionResult(data, setGameState, emit);
+    };
+
+    const handleGameEndedEvent = (data) => {
+      console.log("Game ended:", data);
+      handleGameEnded(data, disconnect);
+    };
+
+    on("connect", handleConnect);
+    on("game_started", handleGameStartedEvent);
+    on("action_result", handleActionResultEvent);
+    on("game_ended", handleGameEndedEvent);
+
+    return () => {
+      off("connect", handleConnect);
+      off("game_started", handleGameStartedEvent);
+      off("action_result", handleActionResultEvent);
+      off("game_ended", handleGameEndedEvent);
+      disconnect();
+    };
+  }, [on, off, emit, disconnect]);
 
   const handleAction = (choiceId) => {
     setGameState((prevState) => ({
@@ -73,7 +86,6 @@ const EscapeRoom = ({ initialData }) => {
   return (
     <Container maxWidth="sm">
       <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
-        <Header text={"Escape AI"} variant={"h4"} />
         {gameState.isGameOver || gameState.error ? (
           <GameEnd
             description={gameState.description}
@@ -89,6 +101,11 @@ const EscapeRoom = ({ initialData }) => {
             error={gameState.error}
             stateId={stateId}
           />
+        )}
+        {gameState.error && (
+          <Alert severity="error" style={{ marginTop: "20px" }}>
+            {gameState.error}
+          </Alert>
         )}
       </Paper>
     </Container>

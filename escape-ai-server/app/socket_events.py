@@ -4,7 +4,7 @@ from app.game_logic import start_game, process_action
 def register_socket_events(socketio):
     @socketio.on('connect')
     def handle_connect():
-        emit('connected', {'data': 'Connected'})
+        print('Client connected')
 
     @socketio.on('start_game')
     def handle_start_game(data):
@@ -19,7 +19,7 @@ def register_socket_events(socketio):
     @socketio.on('end_game')
     def handle_end_game():
         emit('game_ended', {'message': 'Game has ended'})
-        disconnect()
+        disconnect()  
         print('Game ended, client disconnected')
         
     @socketio.on('disconnect')

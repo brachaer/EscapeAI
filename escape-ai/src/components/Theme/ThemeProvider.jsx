@@ -7,7 +7,7 @@ import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
 import rtlPlugin from "stylis-plugin-rtl";
-import { blueGrey, teal, pink, cyan, grey } from "@mui/material/colors";
+import { blueGrey, amber, cyan } from "@mui/material/colors";
 
 import "@fontsource/roboto";
 import "@fontsource/assistant";
@@ -79,7 +79,7 @@ const ThemeProvider = ({ children }) => {
               lang === "he" ? "'rubik', cursive" : "'Special Elite', Roboto",
           },
           button: {
-            fontWeight: "bold",
+            fontWeight: "500",
             fontFamily:
               lang === "he"
                 ? "'rubik', 'Amatic SC', cursive"
@@ -94,12 +94,25 @@ const ThemeProvider = ({ children }) => {
           },
           background: {
             default: mode === "light" ? cyan[100] : cyan[800],
-            paper: mode === "light" ? blueGrey[100] : "#000001",
+            paper: mode === "light" ? blueGrey[50] : "#000001",
             header: cyan[800],
           },
           text: {
-            primary: mode === "light" ? blueGrey[900] : blueGrey[100],
-            secondary: mode === "light" ? blueGrey[800] : blueGrey[200],
+            primary: mode === "light" ? blueGrey[900] : amber[50],
+            secondary: mode === "light" ? blueGrey[800] : cyan[50],
+          },
+        },
+        components: {
+          MuiButton: {
+            styleOverrides: {
+              root: {
+                backgroundColor: mode === "light" ? cyan[700] : cyan[800],
+                color: amber[50],
+                "&:hover": {
+                  backgroundColor: mode === "light" ? cyan[600] : cyan[700],
+                },
+              },
+            },
           },
         },
       }),
