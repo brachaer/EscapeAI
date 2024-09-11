@@ -106,3 +106,4 @@ cython_debug/
 *.sublime-project
 
 .DS_Store
+.vercel
