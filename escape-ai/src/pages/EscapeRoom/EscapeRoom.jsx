@@ -11,7 +11,9 @@ import {
 } from "./socketHandlers";
 
 const EscapeRoom = ({ initialData }) => {
-  const { emit, disconnect, on, off } = useSocket("http://localhost:5000");
+  const { emit, disconnect, on, off } = useSocket(
+    "https://escape-ai-server.vercel.app/"
+  );
   const [gameState, setGameState] = useState({
     description: "",
     options: [],

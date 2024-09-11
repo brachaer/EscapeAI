@@ -4,7 +4,7 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
-    return jsonify({"message": "Welcome to the API"})
+    return jsonify({"message": "Welcome to the EscapeAI API"})
 
 @main.route('/health')
 def health_check():
