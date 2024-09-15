@@ -8,18 +8,18 @@ ROOM_TEMPLATES = {
 
         הנחיות:
         1. כתוב תיאור קצר של החדר, עד 3 משפטים, פונה ישירות ל{name}.
-        2. לאחר התיאור, צור 4 אפשרויות פעולה, אחת מהן מאפשרת יציאה מהחדר.
+        2. לאחר התיאור, צור 4 אפשרויות פעולה, אחת מהן מאפשרת יציאה מהחדר. הקפד להסתיר את האופציה הנכונה כך שהיא לא תהיה ברורה מהתיאור.
         3. כל אפשרות צריכה לכלול ID (1-4), תיאור, ומצב יציאה (true/false).
         4. הדפס קו מפריד (---) בין התיאור לאפשרויות.
 
         דוגמה:
-        {name}, את/ה נכנס לחדר עתיק מלא בספרים ומגילות. על השולחן במרכז החדר מונח ספר פתוח ולידו נר דולק. בפינה אחת יש ארון עץ גדול ובפינה השנייה יש שעון קיר עתיק.
+        {name}, את/ה נכנס/ת לחדר עתיק מלא בספרים ומגילות. על השולחן במרכז החדר מונח ספר פתוח ולידו נר דולק. בפינה אחת יש ארון עץ גדול ובפינה השנייה יש שעון קיר עתיק.
 
         ---
-        1|לקרוא בספר הפתוח|false
-        2|לבדוק את הארון העץ|false
-        3|להתבונן בשעון הקיר|false
-        4|להזיז את השטיח שעל הרצפה|true
+        1|לקרוא בספר הפתוח ולחפש רמזים מוסתרים|false
+        2|לבדוק את הארון העץ ולחפש חפצים ייחודיים|false
+        3|להתבונן בשעון הקיר ולנסות לנער אותו|false
+        4|להזיז את השטיח על הרצפה ולגלות מה מתחתיו|true
 
         אנא ספק את התיאור ואת האפשרויות בפורמט דומה.
         """
@@ -31,7 +31,7 @@ ROOM_TEMPLATES = {
 
         Instructions:
         1. Write a short description of up to 3 sentences describing the room, addressing {name} directly.
-        2. Then, create exactly 4 action options, one of which allows exit from the room.
+        2. Then, create exactly 4 action options, one of which allows exit from the room. Make sure to disguise the exit option so it is not obvious from the description.
         3. For each option, provide an ID (1-4), description, and exit status (true/false).
         4. Separate the description and the options clearly with a line of dashes (---).
 
@@ -39,10 +39,10 @@ ROOM_TEMPLATES = {
         {name}, you enter an ancient room filled with books and scrolls. On the central table lies an open book next to a burning candle. In one corner stands a large wooden cabinet, and in the other, an antique wall clock.
 
         ---
-        1|Read the open book|false
-        2|Examine the wooden cabinet|false
-        3|Look closely at the wall clock|false
-        4|Move the rug on the floor|true
+        1|Read the open book and search for hidden clues|false
+        2|Examine the wooden cabinet for unique items|false
+        3|Look closely at the wall clock and try to shake it|false
+        4|Move the rug on the floor and discover what is underneath|true
 
         Please provide the description and options in a similar format.
         """
@@ -66,12 +66,12 @@ ACTION_TEMPLATES = {
         הנחיות:
         1. כתוב תיאור קצר של עד 3 משפטים המתאר את התוצאה של פעולת המשתמש, פונה ישירות ל{name}.
         2. אם הבחירה הובילה ליציאה, כתוב הודעת סיום קצרה במקום.
-        3. אחרת, צור 4 אפשרויות פעולה חדשות, שונות מהקודמות, כאשר אחת מהן מאפשרת יציאה מהחדר.
+        3. אחרת, צור 4 אפשרויות פעולה חדשות, שונות מהקודמות, אחת מהן מאפשרת יציאה מהחדר. הסתיר את האפשרות הנכונה כך שהיא לא תהיה ברורה מהתיאור.
         4. לכל אפשרות, ספק ID (1-4), תיאור, ומצב יציאה (true/false).
         5. הדפס קו מפריד (---) בין התיאור לאפשרויות.
 
         דוגמה לתגובה רגילה:
-        {name}, את/ה מרים את השטיח ומגלה דלת מסתורית ברצפה. הדלת נעולה, אבל את/ה מבחין במפתח קטן תלוי על השעון הקיר.
+        {name}, את/ה מרים/ה את השטיח ומגלה דלת מסתורית ברצפה. הדלת נעולה, אבל את/ה מבחין/ה במפתח קטן תלוי על השעון הקיר.
 
         ---
         1|לנסות לפתוח את הדלת המסתורית עם המפתח|true
@@ -101,7 +101,7 @@ ACTION_TEMPLATES = {
         Instructions:
         1. Write a short description of up to 3 sentences describing the result of the user's action, addressing {name} directly.
         2. If the choice led to an exit, write a brief completion message instead.
-        3. Otherwise, create 4 new action options, different from the previous ones, one of which allows exit from the room.
+        3. Otherwise, create 4 new action options, different from the previous ones, one of which allows exit from the room. Disguise the exit option so it is not obvious from the description.
         4. For each option, provide an ID (1-4), description, and exit status (true/false).
         5. Separate the description and the options clearly with a line of dashes (---).
 
