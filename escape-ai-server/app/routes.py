@@ -13,15 +13,13 @@ def index():
 
     return jsonify({"message": "Welcome to EscapeAI"})
 
-@main.route('/start_game', methods=['POST'])
+@main.route('/start_game', methods=['OPTIONS', 'POST'])
 def handle_start_game():
-    logging.debug("Starting game function")
-  
-    data = request.json
-    logging.debug("Game initialization complete")
+    if request.method == 'OPTIONS':
+        return jsonify({}), 200
 
+    data = request.json
     game_data = start_game(data)
-    logging.debug("Returning game data")
     return jsonify(game_data), 200
 
 @main.route('/game_action', methods=['POST'])

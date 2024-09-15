@@ -23,6 +23,7 @@ const EscapeGame = ({ initialData }) => {
       error: null,
     }));
     setStateId(null);
+
     try {
       const response = await fetch(`${API_BASE_URL}/start_game`, {
         method: "POST",
@@ -32,7 +33,10 @@ const EscapeGame = ({ initialData }) => {
         body: JSON.stringify(initialData),
       });
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        const errorDetails = await response.text();
+        throw new Error(
+          `Network response was not ok: ${response.status} - ${errorDetails}`
+        );
       }
       const data = await response.json();
       handleGameStarted(data);

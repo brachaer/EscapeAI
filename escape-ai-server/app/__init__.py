@@ -7,9 +7,9 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    CORS(app)
-# origins=["http://localhost:5173"]
-    socketio = SocketIO(app, async_mode='threading', cors_allowed_origins=["http://localhost:5173"], logger=True, engineio_logger=True)
+    CORS(app, supports_credentials=True)
+
+    socketio = SocketIO(app, async_mode='threading', cors_allowed_origins=["http://localhost:5173"], supports_credentials=True, logger=True, engineio_logger=True)
     socketio.init_app(app)
 
     from app.routes import main
