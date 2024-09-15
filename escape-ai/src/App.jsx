@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import UserForm from "./pages/UserForm/UserForm";
 import EscapeRoom from "./pages/EscapeRoom/EscapeRoom";
+import EscapeGame from "./pages/EscapeGame/EscapeGame";
 import Introduction from "./pages/Introduction/Introduction";
 import NavBar from "./components/NavBar/NavBar";
 import Header from "./components/Header/Header";
@@ -38,7 +39,7 @@ const App = () => {
           ) : page === "intro" ? (
             <Introduction onStartGame={handleStartGame} />
           ) : (
-            <EscapeRoom initialData={userData} />
+            <EscapeGame initialData={userData} />
           )}
         </Paper>
       </Box>

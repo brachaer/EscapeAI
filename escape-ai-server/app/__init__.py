@@ -3,14 +3,13 @@ from flask_socketio import SocketIO
 from config.settings import Config
 from flask_cors import CORS
 
-app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173"])  
-
-socketio = SocketIO(app, async_mode='threading', cors_allowed_origins=["http://localhost:5173"], logger=True, engineio_logger=True)
-
 def create_app(config_class=Config):
+    app = Flask(__name__)
     app.config.from_object(config_class)
 
+    CORS(app)
+# origins=["http://localhost:5173"]
+    socketio = SocketIO(app, async_mode='threading', cors_allowed_origins=["http://localhost:5173"], logger=True, engineio_logger=True)
     socketio.init_app(app)
 
     from app.routes import main
@@ -20,3 +19,5 @@ def create_app(config_class=Config):
     register_socket_events(socketio)
     
     return app
+
+app = create_app()
