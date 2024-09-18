@@ -15,8 +15,11 @@ const EscapeGame = ({ initialData }) => {
     error: null,
   });
   const [stateId, setStateId] = useState(null);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   const startGame = async () => {
+    if (isDataLoaded) return;
+    setIsDataLoaded(true);
     setGameState((prevState) => ({
       ...prevState,
       isLoading: true,
@@ -32,15 +35,19 @@ const EscapeGame = ({ initialData }) => {
         },
         body: JSON.stringify(initialData),
       });
+
       if (!response.ok) {
         const errorDetails = await response.text();
         throw new Error(
           `Network response was not ok: ${response.status} - ${errorDetails}`
         );
       }
+
       const data = await response.json();
+      console.log("Game start response:", data);
       handleGameStarted(data);
     } catch (error) {
+      console.error("Error starting game:", error);
       setGameState((prevState) => ({
         ...prevState,
         isLoading: false,
@@ -50,6 +57,10 @@ const EscapeGame = ({ initialData }) => {
   };
 
   const handleGameStarted = (data) => {
+    if (!data.state_id) {
+      console.error("Invalid game start data:", data);
+      return;
+    }
     setGameState((prevState) => ({
       ...prevState,
       description: data.description,
@@ -61,12 +72,20 @@ const EscapeGame = ({ initialData }) => {
   };
 
   const handleAction = async (choiceId) => {
+    if (!stateId) {
+      console.warn("State ID is not set yet");
+      return;
+    }
+
     setGameState((prevState) => ({
       ...prevState,
       isLoading: true,
       error: null,
     }));
+
     try {
+      console.log("game action", choiceId);
+
       const response = await fetch(`${API_BASE_URL}/game_action`, {
         method: "POST",
         headers: {
@@ -78,12 +97,16 @@ const EscapeGame = ({ initialData }) => {
           lang: initialData.lang,
         }),
       });
+
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        const errorText = await response.text();
+        throw new Error(`Network response was not ok: ${errorText}`);
       }
+
       const data = await response.json();
       handleActionResult(data);
     } catch (error) {
+      console.error("Error during game action:", error);
       setGameState((prevState) => ({
         ...prevState,
         isLoading: false,
@@ -107,11 +130,11 @@ const EscapeGame = ({ initialData }) => {
         options: data.options,
         isLoading: false,
       }));
-      setStateId(data.state_id);
     }
   };
 
   useEffect(() => {
+    console.log("hello world!");
     startGame();
   }, []);
 

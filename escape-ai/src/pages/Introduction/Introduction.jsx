@@ -14,7 +14,6 @@ const Introduction = ({ onStartGame }) => {
   const { t, i18n } = useTranslation();
 
   const handleStartGame = () => {
-    console.log("Current language:", i18n.language);
     onStartGame();
   };
 

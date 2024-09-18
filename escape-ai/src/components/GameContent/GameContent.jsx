@@ -26,7 +26,7 @@ const GameContent = ({
               color="primary"
               fullWidth
               onClick={() => handleAction(option.id)}
-              disabled={isGameOver || error || !stateId}
+              // disabled={isGameOver || !!error || !stateId}
               sx={{
                 borderRadius: "12px",
                 padding: "10px",

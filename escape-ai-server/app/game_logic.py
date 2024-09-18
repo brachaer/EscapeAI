@@ -54,8 +54,9 @@ def emit_game_update(result):
 def process_action(data):
     state_id = get_validated_state_id(data.get('state_id'))
     lang = data.get('lang')
-    
+
     if not state_id:
+        print("Invalid state_id received:", data.get('state_id'))
         return {"error": "Invalid state_id format"}, 400
 
     current_state = game_state.get_state(state_id)
@@ -63,13 +64,17 @@ def process_action(data):
         return {"error": "Invalid state_id"}, 400
     
     chosen_option = next((opt for opt in current_state['options'] if opt['id'] == data.get('choice')), None)
+    if not chosen_option:
+        print(f"Invalid choice received: {data.get('choice')} for state_id: {state_id}")
+        return {"error": "Invalid choice"}, 400
+
     if chosen_option and chosen_option['is_exit']:
         result = {
             "description": translate("exit", lang),
             "options": [],
             "exit": True
         }
-        emit_game_update(result)
+       # emit_game_update(result)
         return result
 
     result = process_user_action({
@@ -93,5 +98,5 @@ def process_action(data):
         "options": new_options,
         "exit": False
     }
-    emit_game_update(result)
+    #emit_game_update(result)
     return result
