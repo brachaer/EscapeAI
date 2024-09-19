@@ -6,7 +6,6 @@ def translate(key, lang):
 def validate_language(lang):
     return lang if lang in TRANSLATIONS else "en"
 
-
 def extract_description_and_options(text):
     SEPARATOR = '---'
     lines = text.strip().split('\n')

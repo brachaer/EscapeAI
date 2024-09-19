@@ -2,7 +2,6 @@ from bson import ObjectId
 from app.models import GameState
 from app.utils import translate, validate_language, extract_description_and_options
 from app.language_chains import generate_room_description, process_user_action
-from flask_socketio import emit
 
 DEFAULT_LANG = "en"
 
@@ -48,8 +47,6 @@ def start_game(data):
         "state_id": str(state_id)
     }
 
-def emit_game_update(result):
-    emit('game_update', result)
 
 def process_action(data):
     state_id = get_validated_state_id(data.get('state_id'))
@@ -74,7 +71,6 @@ def process_action(data):
             "options": [],
             "exit": True
         }
-       # emit_game_update(result)
         return result
 
     result = process_user_action({
@@ -98,5 +94,4 @@ def process_action(data):
         "options": new_options,
         "exit": False
     }
-    #emit_game_update(result)
     return result

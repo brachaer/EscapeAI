@@ -11,7 +11,7 @@ def mock_dependencies(mocker):
     mocker.patch('app.game_logic.extract_description_and_options', return_value=("Description", [{"id": "1", "description": "Option 1", "is_exit": False}]))
     mocker.patch('app.game_logic.save_initial_game_state', return_value=ObjectId())
     mocker.patch('app.game_logic.get_validated_state_id', return_value=VALID_OBJECT_ID)
-    mocker.patch('app.game_logic.game_state.get_state', return_value={
+    mocker.patch('app.models.GameState.get_state', return_value={
         "name": "Player",
         "current_state": "Current state",
         "options": [{"id": "1", "description": "Option 1", "is_exit": False}, {"id": "exit", "description": "Exit", "is_exit": True}],
@@ -19,8 +19,7 @@ def mock_dependencies(mocker):
         "difficulty": "Easy"
     })
     mocker.patch('app.game_logic.process_user_action', return_value="New description")
-    mocker.patch('app.game_logic.extract_description_and_options', return_value=("New description", []))
-    mocker.patch('app.game_logic.emit_game_update')  
+    mocker.patch('app.utils.extract_description_and_options', return_value=("New description", []))
 
 @pytest.mark.parametrize("input_id, expected", [
     (str(VALID_OBJECT_ID), VALID_OBJECT_ID),
