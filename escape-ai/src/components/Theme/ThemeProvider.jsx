@@ -39,6 +39,9 @@ const cacheLtr = createCache({
 const ThemeProvider = ({ children }) => {
   const [mode, setMode] = useState("light");
   const [lang, setLang] = useState("en");
+  const isMobile = useMediaQuery("(max-width:600px)");
+  const isTablet = useMediaQuery("(min-width:601px) and (max-width:960px)");
+  const isDesktop = useMediaQuery("(min-width:961px)");
 
   const toggleTheme = () => {
     setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
@@ -120,7 +123,17 @@ const ThemeProvider = ({ children }) => {
   );
 
   return (
-    <ThemeContext.Provider value={{ mode, toggleTheme, lang, setLang }}>
+    <ThemeContext.Provider
+      value={{
+        mode,
+        toggleTheme,
+        lang,
+        setLang,
+        isMobile,
+        isTablet,
+        isDesktop,
+      }}
+    >
       <CacheProvider value={lang === "he" ? cacheRtl : cacheLtr}>
         <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>
       </CacheProvider>
