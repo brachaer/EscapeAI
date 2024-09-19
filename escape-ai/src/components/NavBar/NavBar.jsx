@@ -6,6 +6,7 @@ import ToggleThemeButton from "../Theme/ToggleThemeButton";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import LogoImage from "../LogoImage/LogoImage";
 import { useTheme } from "@mui/material/styles";
+import img from "../../assets/escape-logo.jpeg";
 
 const NavBar = () => {
   const theme = useTheme();
@@ -18,7 +19,7 @@ const NavBar = () => {
       }}
     >
       <Toolbar variant="dense">
-        <LogoImage src="../src/assets/escape-logo.jpeg" width="8%" />
+        <LogoImage src={img} width="8%" />
         <Typography
           variant="h3"
           component="div"
