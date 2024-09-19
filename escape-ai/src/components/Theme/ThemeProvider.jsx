@@ -8,6 +8,7 @@ import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
 import rtlPlugin from "stylis-plugin-rtl";
 import { blueGrey, amber, cyan } from "@mui/material/colors";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import "@fontsource/roboto";
 import "@fontsource/assistant";
