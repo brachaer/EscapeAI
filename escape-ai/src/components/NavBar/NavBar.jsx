@@ -42,7 +42,7 @@ const Navbar = () => {
   return (
     <FullWidthAppBar position="fixed">
       <ResponsiveToolbar>
-        <LogoImage src={img} width="10%" />
+        <LogoImage src={img} width="7%" />
         <NavText variant="h3">Escape AI</NavText>
         <ButtonContainer>
           <LanguageSwitcher />
