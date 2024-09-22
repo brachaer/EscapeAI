@@ -2,39 +2,55 @@ import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { styled } from "@mui/material/styles";
 import ToggleThemeButton from "../Theme/ToggleThemeButton";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import LogoImage from "../LogoImage/LogoImage";
-import { useTheme } from "@mui/material/styles";
 import img from "../../assets/escape-logo.jpeg";
 
-const NavBar = () => {
-  const theme = useTheme();
+const FullWidthAppBar = styled(AppBar)(({ theme }) => ({
+  width: "100%",
+  left: 0,
+  right: 0,
+}));
+
+const ResponsiveToolbar = styled(Toolbar)(({ theme }) => ({
+  justifyContent: "space-between",
+  alignItems: "center",
+
+  [theme.breakpoints.down("sm")]: {
+    padding: theme.spacing(0, 1),
+  },
+}));
+
+const NavText = styled(Typography)(({ theme }) => ({
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  [theme.breakpoints.down("sm")]: {
+    fontSize: "0.8rem",
+  },
+  fontFamily: "'Special Elite', Roboto",
+}));
+
+const ButtonContainer = styled("div")({
+  display: "flex",
+  gap: "1%", // או כל מרווח אחר שתרצה
+});
+
+const Navbar = () => {
   return (
-    <AppBar
-      position="absolute"
-      sx={{
-        backgroundColor: theme.palette.background.header,
-        padding: 1,
-      }}
-    >
-      <Toolbar variant="dense">
-        <LogoImage src={img} width="8%" />
-        <Typography
-          variant="h3"
-          component="div"
-          sx={{
-            flexGrow: 1,
-            marginLeft: 1,
-          }}
-        >
-          Escape AI
-        </Typography>
-        <LanguageSwitcher />
-        <ToggleThemeButton />
-      </Toolbar>
-    </AppBar>
+    <FullWidthAppBar position="fixed">
+      <ResponsiveToolbar>
+        <LogoImage src={img} width="10%" />
+        <NavText variant="h3">Escape AI</NavText>
+        <ButtonContainer>
+          <LanguageSwitcher />
+          <ToggleThemeButton />
+        </ButtonContainer>
+      </ResponsiveToolbar>
+    </FullWidthAppBar>
   );
 };
 
-export default NavBar;
+export default Navbar;

@@ -7,7 +7,7 @@ function Header({ text, variant }) {
 
   return (
     <div>
-      <Typography variant={variant} gutterBottom>
+      <Typography variant={variant} gutterBottom sx={{}}>
         {t(text)}
       </Typography>
     </div>

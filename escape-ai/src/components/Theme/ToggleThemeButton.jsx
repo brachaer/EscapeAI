@@ -8,7 +8,7 @@ function ToggleThemeButton() {
   const { mode, toggleTheme } = useTheme();
 
   return (
-    <IconButton onClick={toggleTheme} style={{ margin: "20px" }}>
+    <IconButton onClick={toggleTheme}>
       {mode === "light" ? <Brightness4Icon /> : <Brightness7Icon />}
     </IconButton>
   );

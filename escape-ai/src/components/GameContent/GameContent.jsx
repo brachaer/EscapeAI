@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Grid, Alert } from "@mui/material";
+import { Button, Grid, Alert, Typography } from "@mui/material";
 import MyText from "../MyText/MyText";
 
 const GameContent = ({
@@ -10,23 +10,27 @@ const GameContent = ({
   error,
   stateId,
 }) => (
-  <div style={{ padding: "20px" }}>
+  <div maxWidth="100%">
     {error && (
       <Alert severity="error" style={{ marginBottom: "20px" }}>
         {error}
       </Alert>
     )}
-    <MyText variant={"body1"} text={description} padding="10px" />
+    <Typography
+      variant={"body1"}
+      text={description}
+      style={{ maxWidth: "100%", wordWrap: "break-word" }}
+    />
     <Grid container spacing={2}>
       {options &&
         options.map((option) => (
-          <Grid item xs={6} key={option.id}>
+          <Grid item xs={12} sm={6} key={option.id}>
             <Button
               variant="contained"
               color="primary"
               fullWidth
               onClick={() => handleAction(option.id)}
-              // disabled={isGameOver || !!error || !stateId}
+              disabled={isGameOver || !!error || !stateId}
               sx={{
                 borderRadius: "12px",
                 padding: "10px",

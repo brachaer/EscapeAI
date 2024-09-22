@@ -1,9 +1,9 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import Header from "../Header/Header";
 import MyText from "../MyText/MyText";
 const GameEnd = ({ description, isGameOver, startGame }) => (
-  <div style={{ marginTop: "20px", textAlign: "center" }}>
+  <Container style={{ marginTop: "20px", textAlign: "center" }}>
     <Header
       text={isGameOver ? "Game Over!" : "Error Occurred"}
       variant={"h5"}
@@ -12,7 +12,7 @@ const GameEnd = ({ description, isGameOver, startGame }) => (
     <Button variant="contained" color="secondary" onClick={startGame}>
       Start New Game
     </Button>
-  </div>
+  </Container>
 );
 
 export default GameEnd;

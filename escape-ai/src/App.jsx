@@ -3,11 +3,9 @@ import UserForm from "./pages/UserForm/UserForm";
 import EscapeGame from "./pages/EscapeGame/EscapeGame";
 import Introduction from "./pages/Introduction/Introduction";
 import NavBar from "./components/NavBar/NavBar";
-import Header from "./components/Header/Header";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import videoSource from "./assets/escape_bg_desktop.mp4";
+import MainContent from "./components/MainContent/MainContent";
 import "./App.css";
+import { Container } from "@mui/system";
 
 const App = () => {
   const [gameStarted, setGameStarted] = useState(false);
@@ -24,25 +22,18 @@ const App = () => {
   };
 
   return (
-    <Box>
-      <video autoPlay loop muted className="background-video">
-        <source src={videoSource} type="video/mp4" />
-        Your browser does not support video.
-      </video>
+    <Container>
       <NavBar />
-      <Box className="content-container">
-        <Paper elevation={10} className="paper">
-          <Header text={gameStarted ? "" : "welcome"} variant="h3" />
-          {!gameStarted ? (
-            <UserForm onSubmit={handleFormSubmit} />
-          ) : page === "intro" ? (
-            <Introduction onStartGame={handleStartGame} />
-          ) : (
-            <EscapeGame initialData={userData} />
-          )}
-        </Paper>
-      </Box>
-    </Box>
+      <MainContent>
+        {!gameStarted ? (
+          <UserForm onSubmit={handleFormSubmit} />
+        ) : page === "intro" ? (
+          <Introduction onStartGame={handleStartGame} />
+        ) : (
+          <EscapeGame initialData={userData} />
+        )}
+      </MainContent>
+    </Container>
   );
 };
 

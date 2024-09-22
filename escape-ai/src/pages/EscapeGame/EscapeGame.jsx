@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Paper, Alert } from "@mui/material";
+import { Container, Paper, Alert, Typography } from "@mui/material";
 import GameContent from "../../components/GameContent/GameContent";
 import GameEnd from "../../components/GameEnd/GameEnd";
 import Loading from "../../components/Loading/Loading";
@@ -44,10 +44,8 @@ const EscapeGame = ({ initialData }) => {
       }
 
       const data = await response.json();
-      console.log("Game start response:", data);
       handleGameStarted(data);
     } catch (error) {
-      console.error("Error starting game:", error);
       setGameState((prevState) => ({
         ...prevState,
         isLoading: false,
@@ -84,8 +82,6 @@ const EscapeGame = ({ initialData }) => {
     }));
 
     try {
-      console.log("game action", choiceId);
-
       const response = await fetch(`${API_BASE_URL}/game_action`, {
         method: "POST",
         headers: {
@@ -106,7 +102,6 @@ const EscapeGame = ({ initialData }) => {
       const data = await response.json();
       handleActionResult(data);
     } catch (error) {
-      console.error("Error during game action:", error);
       setGameState((prevState) => ({
         ...prevState,
         isLoading: false,
@@ -134,7 +129,6 @@ const EscapeGame = ({ initialData }) => {
   };
 
   useEffect(() => {
-    console.log("hello world!");
     startGame();
   }, []);
 
@@ -143,30 +137,40 @@ const EscapeGame = ({ initialData }) => {
   }
 
   return (
-    <Container maxWidth="sm">
-      <Paper elevation={3} style={{ padding: "20px", marginTop: "20px" }}>
-        {gameState.isGameOver || gameState.error ? (
-          <GameEnd
-            description={gameState.description}
-            isGameOver={gameState.isGameOver}
-            startGame={startGame}
-          />
-        ) : (
-          <GameContent
-            description={gameState.description}
-            options={gameState.options}
-            handleAction={handleAction}
-            isGameOver={gameState.isGameOver}
-            error={gameState.error}
-            stateId={stateId}
-          />
-        )}
-        {gameState.error && (
-          <Alert severity="error" style={{ marginTop: "20px" }}>
-            {gameState.error}
-          </Alert>
-        )}
-      </Paper>
+    <Container
+      maxWidth="100%"
+      style={{
+        maxHeight: "100%",
+        overflowY: "auto",
+      }}
+    >
+      <Typography
+        variant="body1"
+        style={{ wordWrap: "break-word", marginBottom: "3%" }}
+      >
+        {gameState.description}
+      </Typography>
+      {gameState.isGameOver || gameState.error ? (
+        <GameEnd
+          description={gameState.description}
+          isGameOver={gameState.isGameOver}
+          startGame={startGame}
+        />
+      ) : (
+        <GameContent
+          description={gameState.description}
+          options={gameState.options}
+          handleAction={handleAction}
+          isGameOver={gameState.isGameOver}
+          error={gameState.error}
+          stateId={stateId}
+        />
+      )}
+      {gameState.error && (
+        <Alert severity="error" style={{ marginTop: "20px" }}>
+          {gameState.error}
+        </Alert>
+      )}
     </Container>
   );
 };

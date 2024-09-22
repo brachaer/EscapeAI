@@ -2,94 +2,115 @@ import React from "react";
 import Button from "@mui/material/Button";
 import Header from "../../components/Header/Header";
 import { useTranslation } from "react-i18next";
-import { Container } from "@mui/system";
+import {
+  Container,
+  Box,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from "@mui/material";
 import MyText from "../../components/MyText/MyText";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Box from "@mui/material/Box";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const Introduction = ({ onStartGame }) => {
   const { t, i18n } = useTranslation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const handleStartGame = () => {
-    onStartGame();
+  // פונקציה גמישה יותר לטיפוגרפיה
+  const getVariant = (baseVariant) => {
+    const variantsMap = {
+      h3: "h4",
+      h5: "h6",
+      body1: "body2",
+    };
+    return isMobile ? variantsMap[baseVariant] || baseVariant : baseVariant;
   };
+
+  const handleStartGame = () => onStartGame();
 
   const instructions = t("instructions", { returnObjects: true });
 
+  // הגדרת סגנון רשימה בסגנון אחד במקום כפילות
+  const listStyles = {
+    border: `1px solid ${theme.palette.divider}`,
+    margin: theme.spacing(1, 0),
+    bgcolor: "background.paper",
+    "& .MuiListItem-root": {
+      display: "flex",
+      flexDirection: i18n.language === "he" ? "row-reverse" : "row",
+      alignItems: "center",
+      padding: theme.spacing(1),
+    },
+    "& .MuiListItemIcon-root": {
+      minWidth: isMobile ? theme.spacing(3) : theme.spacing(4),
+    },
+    maxHeight: "30vh",
+    overflowY: "auto",
+    scrollbarWidth: "thin",
+    "&::-webkit-scrollbar": {
+      width: "8px",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: theme.palette.primary.main,
+      borderRadius: "4px",
+    },
+  };
+
   return (
     <Container
-      maxWidth="sm"
+      maxWidth="100%"
+      disableGutters
       sx={{
-        p: 2,
-        height: "80vh",
+        height: "100%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
+        padding: theme.spacing(0),
+        [theme.breakpoints.up("sm")]: {
+          padding: theme.spacing(1),
+        },
       }}
     >
-      <Box>
-        <Header text="intro" variant="h3" />
-        <Header text="welcome_intro" variant="h5" />
-        <List
-          component="ol"
-          sx={{
-            border: "1px solid",
-            margin: "10px",
-            bgcolor: "background.default",
-            "& .MuiListItem-root": {
-              display: "flex",
-              flexDirection: i18n.language === "he" ? "row-reverse" : "row",
-              alignItems: "center",
-            },
-            "& .MuiListItemIcon-root": {
-              minWidth: "30px",
-            },
-            height: "20vh",
-            overflowX: "auto",
-            scrollbarWidth: "thin",
-            "&::-webkit-scrollbar": {
-              width: "8px",
-            },
-            "&::-webkit-scrollbar-thumb": {
-              borderRadius: "4px",
-            },
-            "&::-webkit-scrollbar-track": {},
-          }}
-        >
+      <Container>
+        <Header text="intro" variant={getVariant("h3")} />
+        <Header text="welcome_intro" variant={getVariant("h6")} />
+        <List component="ol" sx={listStyles}>
           {instructions.map((instruction, index) => (
             <ListItem key={index}>
               <ListItemIcon>
-                <Box mr={2}>
-                  <MyText
-                    text={
-                      i18n.language === "en"
-                        ? index + 1 + "."
-                        : "." + (index + 1)
-                    }
-                    variant="body1"
-                    padding={"5px"}
-                  />
-                </Box>
+                <MyText
+                  text={
+                    i18n.language === "en" ? `${index + 1}.` : `.${index + 1}`
+                  }
+                  variant={getVariant("body1")}
+                />
               </ListItemIcon>
-              <ListItemText>{instruction}</ListItemText>
+              <ListItemText
+                primary={instruction}
+                primaryTypographyProps={{ variant: getVariant("body1") }}
+              />
             </ListItem>
           ))}
         </List>
-        <Header text="goal_title" variant="h5" />
-        <MyText text="goal_intro" variant="body1" padding={"5px"} />
-        <Header text="good_luck" variant="h5" />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleStartGame}
-          sx={{ mt: 2, padding: "5px" }}
-        >
-          {t("start_game")}
-        </Button>
-      </Box>
+        <Header text="goal_title" variant={getVariant("h5")} />
+        <MyText text="goal_intro" variant={getVariant("body1")} />
+        <Header text="good_luck" variant={getVariant("h5")} />
+      </Container>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleStartGame}
+        sx={{
+          mt: theme.spacing(1), // מרווח קטן יותר בין הטקסט לכפתור
+          padding: theme.spacing(1, 2),
+          fontSize: theme.typography[isMobile ? "body2" : "body1"].fontSize,
+        }}
+      >
+        {t("start_game")}
+      </Button>
     </Container>
   );
 };

@@ -1,19 +1,9 @@
 #root {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  overflow: hidden; /* Ensure content fits within the viewport */
-}
-
-.background-video {
-  position: fixed; /* Change to fixed to cover the entire viewport */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
+  overflow: hidden; 
 }
 
 .content-container {
@@ -21,13 +11,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 85%;
   z-index: 1;
 }
 
 .paper {
   padding: 20px;
-  max-width: 600px;
+  max-width: 85%;
   width: 90%;
   border-radius: 20px;
   display: flex;
@@ -41,7 +31,7 @@
   border: 1px solid rgba(42, 230, 230, 0.592);
   backdrop-filter: blur(10px);
   margin: 0 auto;
-  margin-top: 60px; 
+  margin-top: 20%; 
 }
 
 .paper::before {

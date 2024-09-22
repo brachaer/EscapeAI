@@ -20,7 +20,6 @@ const LanguageSwitcher = () => {
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
-    console.log(lang, language);
     setAnchorEl(event.currentTarget);
   };
 
