@@ -35,7 +35,7 @@ const NavText = styled(Typography)(({ theme }) => ({
 
 const ButtonContainer = styled("div")({
   display: "flex",
-  gap: "1%", // או כל מרווח אחר שתרצה
+  gap: "1%",
 });
 
 const Navbar = () => {

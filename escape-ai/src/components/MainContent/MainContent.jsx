@@ -9,7 +9,7 @@ const MainContentWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(3),
   width: "100%",
   [theme.breakpoints.down("sm")]: {
-    marginTop: "20%",
+    marginTop: "25%",
     padding: theme.spacing(2),
   },
 }));
