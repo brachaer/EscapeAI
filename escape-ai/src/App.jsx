@@ -6,7 +6,7 @@ import NavBar from "./components/NavBar/NavBar";
 import MainContent from "./components/MainContent/MainContent";
 import "./App.css";
 import { Container } from "@mui/system";
-
+import imgSrc from "./assets/escape_bg.jpeg";
 const App = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -22,7 +22,20 @@ const App = () => {
   };
 
   return (
-    <Container>
+    <Container
+      disableGutters
+      sx={{
+        backgroundImage: `url(${imgSrc})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        height: "100vh",
+        width: "100vw",
+        display: "flex",
+        flexDirection: "column",
+        padding: 0,
+      }}
+    >
       <NavBar />
       <MainContent>
         {!gameStarted ? (

@@ -6,10 +6,10 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 const MainContentWrapper = styled("div")(({ theme }) => ({
   marginTop: theme.mixins.toolbar.minHeight,
-  padding: theme.spacing(3),
+  padding: theme.spacing(15),
   width: "100%",
   [theme.breakpoints.down("sm")]: {
-    marginTop: "25%",
+    marginTop: "10%",
     padding: theme.spacing(2),
   },
 }));
@@ -20,7 +20,19 @@ const MainContent = ({ children }) => {
 
   return (
     <MainContentWrapper>
-      <Container maxWidth={isMobile ? "sm" : "xl"} my={2}>
+      <Container
+        maxwidth={isMobile ? "sm" : "xl"}
+        my={2}
+        sx={{
+          backgroundColor: "rgba(255, 255, 255, 0.95)",
+          borderRadius: "8px",
+          padding: "5%",
+          marginTop: "5vh",
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         {children}
       </Container>
     </MainContentWrapper>

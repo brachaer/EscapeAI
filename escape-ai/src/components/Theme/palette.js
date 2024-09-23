@@ -3,7 +3,7 @@ import { cyan, grey } from "@mui/material/colors";
 export const lightPalette = {
   primary: cyan,
   secondary: {
-    main: cyan[700],
+    main: cyan[800],
   },
   background: {
     default: grey[100],

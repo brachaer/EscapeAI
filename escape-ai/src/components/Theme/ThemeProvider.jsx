@@ -1,8 +1,16 @@
-import React, { createContext, useContext, useState, useMemo } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useMemo,
+  useEffect,
+} from "react";
 import {
   ThemeProvider as MuiThemeProvider,
   createTheme,
 } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
@@ -54,13 +62,13 @@ const ThemeProvider = ({ children }) => {
             color: darkPalette.text.secondary,
             backgroundColor:
               theme.palette.mode === "light"
-                ? lightPalette.main
-                : darkPalette.main,
+                ? lightPalette.secondary.main
+                : darkPalette.secondary.main,
             "&:hover": {
               backgroundColor:
                 theme.palette.mode === "light"
-                  ? lightPalette.secondary.main
-                  : darkPalette.secondary.main,
+                  ? lightPalette.main
+                  : darkPalette.main,
             },
           }),
         },
@@ -94,10 +102,15 @@ const ThemeProvider = ({ children }) => {
       },
     },
   };
+
   const theme = useMemo(
     () => createTheme(themeOptions),
     [mode, lang, isMobile, isTablet]
   );
+
+  useEffect(() => {
+    document.body.dir = lang === "he" ? "rtl" : "ltr";
+  }, [lang]);
 
   return (
     <ThemeContext.Provider
@@ -112,7 +125,10 @@ const ThemeProvider = ({ children }) => {
       }}
     >
       <CacheProvider value={lang === "he" ? cacheRtl : cacheLtr}>
-        <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline />
+          {children}
+        </MuiThemeProvider>
       </CacheProvider>
     </ThemeContext.Provider>
   );

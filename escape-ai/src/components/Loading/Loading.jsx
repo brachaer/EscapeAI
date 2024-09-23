@@ -1,20 +1,34 @@
 import React from "react";
-import { CircularProgress, Box, Typography } from "@mui/material";
-import imgSrc from "../../assets/loading_escape_ai.jpeg";
+import videoSrc from "../../assets/please_wait.mp4";
+
 const Loading = () => {
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      minHeight="100vh"
-      bgcolor="#f5f5f5"
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "black",
+        overflow: "hidden",
+      }}
     >
-      <img src={imgSrc} alt="Loading" style={{ width: "40%" }} />
-      <CircularProgress style={{ marginTop: "5%" }} />
-      <Typography variant="h6">Loading...</Typography>
-    </Box>
+      <video
+        src={videoSrc}
+        autoPlay
+        muted
+        loop
+        style={{
+          maxHeight: "100%",
+          objectFit: "contain",
+          marginTop: "10vh",
+        }}
+      />
+    </div>
   );
 };
 

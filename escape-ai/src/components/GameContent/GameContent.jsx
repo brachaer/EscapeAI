@@ -10,7 +10,7 @@ const GameContent = ({
   error,
   stateId,
 }) => (
-  <div maxWidth="100%">
+  <div maxwidth="100%">
     {error && (
       <Alert severity="error" style={{ marginBottom: "20px" }}>
         {error}
@@ -19,7 +19,7 @@ const GameContent = ({
     <Typography
       variant={"body1"}
       text={description}
-      style={{ maxWidth: "100%", wordWrap: "break-word" }}
+      style={{ maxwidth: "100%", wordWrap: "break-word" }}
     />
     <Grid container spacing={2}>
       {options &&

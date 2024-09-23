@@ -1,5 +1,5 @@
 {
-  "welcome": "Welcome",
+  "welcome": "Ready to escape?",
   "user_form":"Please fill the form to start game :)",
   "choose_language": "Choose Language",
   "escape_ai": "Escape AI",
@@ -12,7 +12,7 @@
   "hard":"Hard",
   "language": "Language",
   "start_game": "Start Game",
-  "sign_in": "Sign In",
+  "sign_in": "Let's begin",
   "required": "Required",
   "please_select_number_between": "Please select a number between 3 and 10",
   "intro":"Instruction",

@@ -138,7 +138,7 @@ const EscapeGame = ({ initialData }) => {
 
   return (
     <Container
-      maxWidth="100%"
+      maxwidth="100%"
       style={{
         maxHeight: "100%",
         overflowY: "auto",

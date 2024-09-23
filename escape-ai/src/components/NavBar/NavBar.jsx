@@ -12,6 +12,7 @@ const FullWidthAppBar = styled(AppBar)(({ theme }) => ({
   width: "100%",
   left: 0,
   right: 0,
+  backgroundColor: theme.palette.secondary.main,
 }));
 
 const ResponsiveToolbar = styled(Toolbar)(({ theme }) => ({
@@ -28,7 +29,7 @@ const NavText = styled(Typography)(({ theme }) => ({
   overflow: "hidden",
   textOverflow: "ellipsis",
   [theme.breakpoints.down("sm")]: {
-    fontSize: "0.8rem",
+    fontSize: "1.5rem",
   },
   fontFamily: "'Special Elite', Roboto",
 }));
@@ -42,7 +43,7 @@ const Navbar = () => {
   return (
     <FullWidthAppBar position="fixed">
       <ResponsiveToolbar>
-        <LogoImage src={img} width="7%" />
+        <LogoImage src={img} width="15%" />
         <NavText variant="h3">Escape AI</NavText>
         <ButtonContainer>
           <LanguageSwitcher />

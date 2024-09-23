@@ -12,8 +12,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <LanguageProvider>
       <ThemeProvider>
-        <GlobalStyles />
         <CssBaseline />
+        <GlobalStyles />
         <App />
       </ThemeProvider>
     </LanguageProvider>

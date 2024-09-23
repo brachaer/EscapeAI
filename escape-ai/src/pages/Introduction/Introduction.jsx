@@ -4,11 +4,11 @@ import Header from "../../components/Header/Header";
 import { useTranslation } from "react-i18next";
 import {
   Container,
-  Box,
   List,
   ListItem,
-  ListItemIcon,
   ListItemText,
+  Typography,
+  Box,
 } from "@mui/material";
 import MyText from "../../components/MyText/MyText";
 import { useTheme } from "@mui/material/styles";
@@ -18,8 +18,8 @@ const Introduction = ({ onStartGame }) => {
   const { t, i18n } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isRTL = i18n.language === "he" || i18n.language === "ar";
 
-  // פונקציה גמישה יותר לטיפוגרפיה
   const getVariant = (baseVariant) => {
     const variantsMap = {
       h3: "h4",
@@ -30,25 +30,20 @@ const Introduction = ({ onStartGame }) => {
   };
 
   const handleStartGame = () => onStartGame();
-
   const instructions = t("instructions", { returnObjects: true });
 
-  // הגדרת סגנון רשימה בסגנון אחד במקום כפילות
   const listStyles = {
     border: `1px solid ${theme.palette.divider}`,
-    margin: theme.spacing(1, 0),
+    marginBlock: theme.spacing(1),
     bgcolor: "background.paper",
+    maxHeight: "15vh", // Limit the height to 30% of the viewport height
+    overflowY: "auto",
     "& .MuiListItem-root": {
       display: "flex",
-      flexDirection: i18n.language === "he" ? "row-reverse" : "row",
-      alignItems: "center",
-      padding: theme.spacing(1),
+      flexDirection: isRTL ? "row-reverse" : "row",
+      alignItems: "flex-start",
+      paddingInline: theme.spacing(1),
     },
-    "& .MuiListItemIcon-root": {
-      minWidth: isMobile ? theme.spacing(3) : theme.spacing(4),
-    },
-    maxHeight: "30vh",
-    overflowY: "auto",
     scrollbarWidth: "thin",
     "&::-webkit-scrollbar": {
       width: "8px",
@@ -61,56 +56,71 @@ const Introduction = ({ onStartGame }) => {
 
   return (
     <Container
-      maxWidth="100%"
+      maxwidth="100%"
       disableGutters
       sx={{
-        height: "100%",
+        height: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
         padding: theme.spacing(0),
-        [theme.breakpoints.up("sm")]: {
-          padding: theme.spacing(1),
-        },
+        direction: isRTL ? "rtl" : "ltr",
       }}
     >
-      <Container>
-        <Header text="intro" variant={getVariant("h3")} />
-        <Header text="welcome_intro" variant={getVariant("h6")} />
-        <List component="ol" sx={listStyles}>
+      <Container
+        sx={{
+          flexGrow: 1,
+          overflowY: "auto",
+          padding: theme.spacing(1),
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Header text="intro" variant={getVariant("h4")} />
+        <Header text="welcome_intro" variant={getVariant("body1")} />
+        <List
+          component="ol"
+          sx={listStyles}
+          aria-label={t("instructions_aria_label")}
+        >
           {instructions.map((instruction, index) => (
             <ListItem key={index}>
-              <ListItemIcon>
-                <MyText
-                  text={
-                    i18n.language === "en" ? `${index + 1}.` : `.${index + 1}`
-                  }
-                  variant={getVariant("body1")}
-                />
-              </ListItemIcon>
               <ListItemText
-                primary={instruction}
-                primaryTypographyProps={{ variant: getVariant("body1") }}
+                disableTypography
+                primary={
+                  <Typography
+                    variant={getVariant("body2")}
+                    component="span"
+                    sx={{
+                      display: "block",
+                      unicodeBidi: "plaintext",
+                      direction: isRTL ? "rtl" : "ltr",
+                    }}
+                  >
+                    {instruction}
+                  </Typography>
+                }
               />
             </ListItem>
           ))}
         </List>
-        <Header text="goal_title" variant={getVariant("h5")} />
-        <MyText text="goal_intro" variant={getVariant("body1")} />
-        <Header text="good_luck" variant={getVariant("h5")} />
+        <Header text="goal_title" variant={getVariant("h6")} />
+        <MyText text="goal_intro" variant={getVariant("body2")} />
+        <Header text="good_luck" variant={getVariant("h6")} />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleStartGame}
+          sx={{
+            marginBlock: theme.spacing(1),
+            paddingInline: theme.spacing(2),
+            fontSize: theme.typography[isMobile ? "body2" : "body1"].fontSize,
+          }}
+          aria-label={t("start_game_aria_label")}
+        >
+          {t("start_game")}
+        </Button>
       </Container>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleStartGame}
-        sx={{
-          mt: theme.spacing(1), // מרווח קטן יותר בין הטקסט לכפתור
-          padding: theme.spacing(1, 2),
-          fontSize: theme.typography[isMobile ? "body2" : "body1"].fontSize,
-        }}
-      >
-        {t("start_game")}
-      </Button>
     </Container>
   );
 };
