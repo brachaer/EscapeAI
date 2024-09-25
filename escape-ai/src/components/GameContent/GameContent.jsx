@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, Grid, Alert, Typography } from "@mui/material";
-import MyText from "../MyText/MyText";
 
 const GameContent = ({
   description,
@@ -10,17 +9,19 @@ const GameContent = ({
   error,
   stateId,
 }) => (
-  <div maxwidth="100%">
+  <div maxwidth="100vh">
     {error && (
       <Alert severity="error" style={{ marginBottom: "20px" }}>
         {error}
       </Alert>
     )}
     <Typography
-      variant={"body1"}
-      text={description}
-      style={{ maxwidth: "100%", wordWrap: "break-word" }}
-    />
+      variant="body1"
+      style={{ wordWrap: "break-word", marginBottom: "3%" }}
+    >
+      {description}
+    </Typography>
+
     <Grid container spacing={2}>
       {options &&
         options.map((option) => (

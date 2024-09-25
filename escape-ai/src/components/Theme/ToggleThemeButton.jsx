@@ -9,7 +9,11 @@ function ToggleThemeButton() {
 
   return (
     <IconButton onClick={toggleTheme}>
-      {mode === "light" ? <Brightness4Icon /> : <Brightness7Icon />}
+      {mode === "light" ? (
+        <Brightness4Icon sx={{ color: "white" }} />
+      ) : (
+        <Brightness7Icon sx={{ color: "white" }} />
+      )}
     </IconButton>
   );
 }

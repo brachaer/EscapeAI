@@ -1,11 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import Typography from "@mui/material/Typography";
 import { useTranslation } from "react-i18next";
-import { useLanguage } from "../../context/LanguageContext";
 
 function Header({ text, variant, lang }) {
   const { t } = useTranslation();
-  // const { lang } = useLanguage();
 
   return (
     <div>

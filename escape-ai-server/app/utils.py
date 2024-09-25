@@ -9,6 +9,7 @@ def validate_language(lang):
 def extract_description_and_options(text):
     SEPARATOR = '---'
     lines = text.strip().split('\n')
+
     if SEPARATOR in lines:
         separator_index = lines.index(SEPARATOR)
         description = '\n'.join(lines[:separator_index])
@@ -16,6 +17,7 @@ def extract_description_and_options(text):
     else:
         description = '\n'.join(lines[:3])
         options_text = '\n'.join(lines[3:])
+    
     return description, parse_options(options_text)
 
 def parse_options(options_text):

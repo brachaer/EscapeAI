@@ -26,7 +26,7 @@
   "goal_title": "The Goal",
   "goal_intro":  "The main goal is to find the most efficient option for escaping the room.",
   "good_luck": "Good luck!",
-  "congratulations":"Congratulations",
-  "completed":"You have successfully completed Escape AI",
+  "success":"Success!",
+  "new_game":"Start Again",
   "thanks":"Thank you for playing"
 }

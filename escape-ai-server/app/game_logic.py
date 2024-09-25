@@ -1,7 +1,7 @@
 from bson import ObjectId
 from app.models import GameState
 from app.utils import translate, validate_language, extract_description_and_options
-from app.language_chains import generate_room_description, process_user_action
+from app.language_chains import generate_room_description, process_user_action, process_game_exit
 
 DEFAULT_LANG = "en"
 
@@ -66,23 +66,28 @@ def process_action(data):
         return {"error": "Invalid choice"}, 400
 
     if chosen_option and chosen_option['is_exit']:
-        result = {
-            "description": translate("exit", lang),
-            "options": [],
-            "exit": True
-        }
-        return result
-
-    result = process_user_action({
-        "name": current_state['name'],
-        "current_state": current_state['current_state'],
-        "options": current_state['options'],
-        "choice": data.get('choice'),
-        "theme": current_state['theme'],
-        "difficulty": current_state['difficulty']
-    }, lang)
+        result = process_game_exit({
+            "name": current_state['name'],
+            "current_state": current_state['current_state'],
+            "theme": current_state['theme'],
+            "difficulty": current_state['difficulty']
+        }, lang)
+        new_description = result  
+        new_options = []  
+        is_game_over = True
     
-    new_description, new_options = extract_description_and_options(result)
+    else:    
+        result = process_user_action({
+            "name": current_state['name'],
+            "current_state": current_state['current_state'],
+            "options": current_state['options'],
+            "choice": data.get('choice'),
+            "theme": current_state['theme'],
+            "difficulty": current_state['difficulty']
+        }, lang)
+        
+        new_description, new_options = extract_description_and_options(result)
+        is_game_over = False
 
     game_state.update_state(state_id, {
         "current_state": new_description,
@@ -92,6 +97,6 @@ def process_action(data):
     result = {
         "description": new_description,
         "options": new_options,
-        "exit": False
+        "is_game_over": is_game_over
     }
     return result

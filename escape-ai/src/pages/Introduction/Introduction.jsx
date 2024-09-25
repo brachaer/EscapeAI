@@ -8,7 +8,6 @@ import {
   ListItem,
   ListItemText,
   Typography,
-  Box,
 } from "@mui/material";
 import MyText from "../../components/MyText/MyText";
 import { useTheme } from "@mui/material/styles";
@@ -18,7 +17,7 @@ const Introduction = ({ onStartGame }) => {
   const { t, i18n } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isRTL = i18n.language === "he" || i18n.language === "ar";
+  const isRTL = i18n.language === "he";
 
   const getVariant = (baseVariant) => {
     const variantsMap = {
@@ -36,7 +35,7 @@ const Introduction = ({ onStartGame }) => {
     border: `1px solid ${theme.palette.divider}`,
     marginBlock: theme.spacing(1),
     bgcolor: "background.paper",
-    maxHeight: "15vh", // Limit the height to 30% of the viewport height
+    maxHeight: "20vh",
     overflowY: "auto",
     "& .MuiListItem-root": {
       display: "flex",
@@ -56,14 +55,12 @@ const Introduction = ({ onStartGame }) => {
 
   return (
     <Container
-      maxwidth="100%"
+      maxwidth="100vw"
       disableGutters
       sx={{
-        height: "100vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        padding: theme.spacing(0),
         direction: isRTL ? "rtl" : "ltr",
       }}
     >
@@ -71,7 +68,6 @@ const Introduction = ({ onStartGame }) => {
         sx={{
           flexGrow: 1,
           overflowY: "auto",
-          padding: theme.spacing(1),
           display: "flex",
           flexDirection: "column",
         }}
@@ -112,11 +108,11 @@ const Introduction = ({ onStartGame }) => {
           color="primary"
           onClick={handleStartGame}
           sx={{
-            marginBlock: theme.spacing(1),
-            paddingInline: theme.spacing(2),
+            // marginBlock: theme.spacing(1),
+            // paddingInline: theme.spacing(2),
             fontSize: theme.typography[isMobile ? "body2" : "body1"].fontSize,
           }}
-          aria-label={t("start_game_aria_label")}
+          aria-label={t("start_game")}
         >
           {t("start_game")}
         </Button>

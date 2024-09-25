@@ -5,7 +5,7 @@ import {
   Menu,
   MenuItem,
   ListItemText,
-  Box,
+  Container,
   Typography,
 } from "@mui/material";
 import { useLanguage } from "../../context/LanguageContext";
@@ -37,12 +37,12 @@ const LanguageSwitcher = () => {
         onClick={handleClick}
         sx={{ display: "flex", alignItems: "center" }}
       >
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Typography variant="body1" sx={{ mr: 1 }}>
+        <Container sx={{ display: "flex", alignItems: "center" }}>
+          <Typography variant="body1" sx={{ mr: 1, color: "white" }}>
             {lang && language === "he" ? "HE" : "EN"}
           </Typography>
-          <ExpandMoreIcon />
-        </Box>
+          <ExpandMoreIcon sx={{ color: "white" }} />
+        </Container>
       </IconButton>
       <Menu anchorEl={anchorEl} open={open} onClose={() => handleClose()}>
         <MenuItem onClick={() => handleClose("en")}>

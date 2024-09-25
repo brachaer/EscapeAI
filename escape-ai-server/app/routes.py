@@ -33,3 +33,4 @@ def handle_game_action():
     except Exception as e:
         print(f"Error processing game action: {e}")
         return jsonify({"error": "Internal server error"}), 500
+

@@ -26,11 +26,10 @@ const App = () => {
       disableGutters
       sx={{
         backgroundImage: `url(${imgSrc})`,
-        backgroundSize: "cover",
+        backgroundSize: "100% 100%",
         backgroundPosition: "center",
-        minHeight: "100vh",
-        height: "100vh",
-        width: "100vw",
+        minHeight: "130vh",
+        minWidth: "100vw",
         display: "flex",
         flexDirection: "column",
         padding: 0,

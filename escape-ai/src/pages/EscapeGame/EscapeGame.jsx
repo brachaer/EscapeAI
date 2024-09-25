@@ -15,14 +15,12 @@ const EscapeGame = ({ initialData }) => {
     error: null,
   });
   const [stateId, setStateId] = useState(null);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   const startGame = async () => {
-    if (isDataLoaded) return;
-    setIsDataLoaded(true);
     setGameState((prevState) => ({
       ...prevState,
       isLoading: true,
+      isGameOver: false,
       error: null,
     }));
     setStateId(null);
@@ -74,7 +72,6 @@ const EscapeGame = ({ initialData }) => {
       console.warn("State ID is not set yet");
       return;
     }
-
     setGameState((prevState) => ({
       ...prevState,
       isLoading: true,
@@ -111,7 +108,8 @@ const EscapeGame = ({ initialData }) => {
   };
 
   const handleActionResult = (data) => {
-    if (data.game_over) {
+    console.log(data);
+    if (data.is_game_over) {
       setGameState((prevState) => ({
         ...prevState,
         description: data.description,
@@ -144,12 +142,6 @@ const EscapeGame = ({ initialData }) => {
         overflowY: "auto",
       }}
     >
-      <Typography
-        variant="body1"
-        style={{ wordWrap: "break-word", marginBottom: "3%" }}
-      >
-        {gameState.description}
-      </Typography>
       {gameState.isGameOver || gameState.error ? (
         <GameEnd
           description={gameState.description}

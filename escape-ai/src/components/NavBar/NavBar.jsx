@@ -32,6 +32,7 @@ const NavText = styled(Typography)(({ theme }) => ({
     fontSize: "1.5rem",
   },
   fontFamily: "'Special Elite', Roboto",
+  color: "white",
 }));
 
 const ButtonContainer = styled("div")({
@@ -43,8 +44,8 @@ const Navbar = () => {
   return (
     <FullWidthAppBar position="fixed">
       <ResponsiveToolbar>
-        <LogoImage src={img} width="15%" />
-        <NavText variant="h3">Escape AI</NavText>
+        <LogoImage src={img} width="10vw" />
+        <NavText variant="h1">Escape AI</NavText>
         <ButtonContainer>
           <LanguageSwitcher />
           <ToggleThemeButton />
