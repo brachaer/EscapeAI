@@ -120,14 +120,11 @@ END_GAME_TEMPLATES = {
         שם: {name}, נושא: {theme}, רמת קושי: {difficulty}, 
 
         הנחיות:
-        1. כתוב סיכום קצר של חווית המשחק (2-3 משפטים).
-        2. ציין הישג משמעותי של השחקן.
-        3. הוסף מסר מעודד לסיום.
+        1. כתוב סיכום קצר של חווית המשחק עד 12 מילים.
+        2. הוסף מסר מעודד לסיום.
 
         תבנית:
         [סיכום המשחק]
-
-        הישג בולט: [הישג השחקן]
 
         [מסר מעודד]
 
@@ -141,14 +138,11 @@ END_GAME_TEMPLATES = {
         Name: {name}, Theme: {theme}, Difficulty: {difficulty}, 
 
         Instructions:
-        1. Write a brief summary of the game experience (2-3 sentences).
-        2. Mention a significant achievement of the player.
-        3. Add an encouraging message to conclude.
+        1. Write a brief summary of the game experience up to 12 words.
+        2. Add an encouraging message to conclude.
 
         Template:
         [Game summary]
-
-        Notable achievement: [Player's achievement]
 
         [Encouraging message]
 

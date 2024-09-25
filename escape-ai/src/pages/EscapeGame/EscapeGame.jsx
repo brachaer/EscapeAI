@@ -143,11 +143,7 @@ const EscapeGame = ({ initialData }) => {
       }}
     >
       {gameState.isGameOver || gameState.error ? (
-        <GameEnd
-          description={gameState.description}
-          isGameOver={gameState.isGameOver}
-          startGame={startGame}
-        />
+        <GameEnd description={gameState.description} startGame={startGame} />
       ) : (
         <GameContent
           description={gameState.description}
