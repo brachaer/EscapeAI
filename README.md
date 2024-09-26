@@ -4,7 +4,7 @@
 ## Technologies Used
 **Frontend:** React, Material-UI
 <br/>
-**Backend:** Python (Flask), Flask-SocketIO, LangChain-OpenAI API, MongoDB
+**Backend:** Python (Flask), LangChain-OpenAI API, MongoDB
 <br/>
 ## Overview
 EscapeAI is a React-based web application that simulates an escape room adventure. <br/>
