@@ -3,7 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
-import ToggleThemeButton from "../Theme/ToggleThemeButton";
+import ToggleThemeButton from "../ToggleThemeButton/ToggleThemeButton";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import LogoImage from "../LogoImage/LogoImage";
 import img from "../../assets/escape-logo.jpeg";
@@ -40,14 +40,14 @@ const ButtonContainer = styled("div")({
   gap: "1%",
 });
 
-const Navbar = () => {
+const Navbar = ({ gameStarted }) => {
   return (
     <FullWidthAppBar position="fixed">
       <ResponsiveToolbar>
         <LogoImage src={img} width="10vw" />
         <NavText variant="h1">Escape AI</NavText>
         <ButtonContainer>
-          <LanguageSwitcher />
+          {!gameStarted && <LanguageSwitcher />}
           <ToggleThemeButton />
         </ButtonContainer>
       </ResponsiveToolbar>

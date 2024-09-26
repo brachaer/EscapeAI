@@ -108,8 +108,6 @@ const Introduction = ({ onStartGame }) => {
           color="primary"
           onClick={handleStartGame}
           sx={{
-            // marginBlock: theme.spacing(1),
-            // paddingInline: theme.spacing(2),
             fontSize: theme.typography[isMobile ? "body2" : "body1"].fontSize,
           }}
           aria-label={t("start_game")}

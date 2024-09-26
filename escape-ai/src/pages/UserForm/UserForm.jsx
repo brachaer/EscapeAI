@@ -7,7 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
-import { padding, styled } from "@mui/system";
+import { styled } from "@mui/system";
 import Header from "../../components/Header/Header";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../../context/LanguageContext";
@@ -16,10 +16,10 @@ const Form = styled("form")({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+  width: "60vw",
   "& > *": {
-    marginBottom: "5%",
+    marginBottom: "8px",
     width: "100%",
-    height: "100%",
   },
 });
 
@@ -85,7 +85,6 @@ const UserForm = ({ onSubmit }) => {
           required
           margin="normal"
         />
-
         <TextField
           fullWidth
           label={t("interest_theme")}
@@ -97,8 +96,8 @@ const UserForm = ({ onSubmit }) => {
           helperText={formik.touched.theme && formik.errors.theme}
           required
           margin="normal"
-        />
-        <FormControl variant="outlined" fullWidth>
+        />{" "}
+        <FormControl variant="outlined" fullWidth margin="normal">
           <InputLabel>{t("difficulty")}</InputLabel>
           <Select
             name="difficulty"
@@ -111,9 +110,8 @@ const UserForm = ({ onSubmit }) => {
             <MenuItem value="medium">{t("medium")}</MenuItem>
             <MenuItem value="hard">{t("hard")}</MenuItem>
           </Select>
-          <br />
         </FormControl>
-        <Button type="submit" variant="contained">
+        <Button type="submit" variant="contained" style={{ marginTop: "8px" }}>
           {t("start_game")}
         </Button>
       </Form>

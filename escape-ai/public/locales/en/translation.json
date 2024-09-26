@@ -1,11 +1,7 @@
 {
   "welcome": "Ready to escape?",
-  "user_form":"Please fill the form to start game :)",
-  "choose_language": "Choose Language",
-  "escape_ai": "Escape AI",
   "name": "Name",
   "interest_theme": "Interest Theme",
-  "number_of_stages": "Number of Stages",
   "difficulty": "Difficulty",
   "easy":"Easy",
   "medium":"Medium",
@@ -14,7 +10,6 @@
   "start_game": "Start Game",
   "sign_in": "Let's begin",
   "required": "Required",
-  "please_select_number_between": "Please select a number between 3 and 10",
   "intro":"Instruction",
   "welcome_intro": "Welcome to the interactive escape room created by AI.",
   "instructions":[
@@ -26,7 +21,7 @@
   "goal_title": "The Goal",
   "goal_intro":  "The main goal is to find the most efficient option for escaping the room.",
   "good_luck": "Good luck!",
-  "success":"Success!",
+  "success":"You Did it!",
   "new_game":"Start Again",
   "thanks":"Thank you for playing"
 }

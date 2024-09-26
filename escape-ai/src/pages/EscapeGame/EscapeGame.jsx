@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Paper, Alert, Typography } from "@mui/material";
+import { Container, Alert } from "@mui/material";
 import GameContent from "../../components/GameContent/GameContent";
 import GameEnd from "../../components/GameEnd/GameEnd";
 import Loading from "../../components/Loading/Loading";
@@ -108,7 +108,6 @@ const EscapeGame = ({ initialData }) => {
   };
 
   const handleActionResult = (data) => {
-    console.log(data);
     if (data.is_game_over) {
       setGameState((prevState) => ({
         ...prevState,

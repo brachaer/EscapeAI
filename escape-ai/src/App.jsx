@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import UserForm from "./pages/UserForm/UserForm";
 import EscapeGame from "./pages/EscapeGame/EscapeGame";
 import Introduction from "./pages/Introduction/Introduction";
@@ -7,19 +7,20 @@ import MainContent from "./components/MainContent/MainContent";
 import "./App.css";
 import { Container } from "@mui/system";
 import imgSrc from "./assets/escape_bg.jpeg";
+
 const App = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [userData, setUserData] = useState(null);
   const [page, setPage] = useState("intro");
 
-  const handleFormSubmit = (formData) => {
+  const handleFormSubmit = useCallback((formData) => {
     setUserData(formData);
     setGameStarted(true);
-  };
+  }, []);
 
-  const handleStartGame = () => {
+  const handleStartGame = useCallback(() => {
     setPage("game");
-  };
+  }, []);
 
   return (
     <Container
@@ -35,18 +36,27 @@ const App = () => {
         padding: 0,
       }}
     >
-      <NavBar />
+      <NavBar gameStarted={gameStarted} />
       <MainContent>
         {!gameStarted ? (
           <UserForm onSubmit={handleFormSubmit} />
-        ) : page === "intro" ? (
-          <Introduction onStartGame={handleStartGame} />
         ) : (
-          <EscapeGame initialData={userData} />
+          <PageSelector
+            page={page}
+            onStartGame={handleStartGame}
+            userData={userData}
+          />
         )}
       </MainContent>
     </Container>
   );
+};
+
+const PageSelector = ({ page, onStartGame, userData }) => {
+  if (page === "intro") {
+    return <Introduction onStartGame={onStartGame} />;
+  }
+  return <EscapeGame initialData={userData} />;
 };
 
 export default App;

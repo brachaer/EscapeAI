@@ -1,5 +1,3 @@
-import { fontWeight } from "@mui/system";
-
 export const getTypography = (lang, isMobile, isTablet) => ({
   fontFamily: lang === "he" ? " 'rubik', cursive" : "'Special Elite', Roboto",
   h1: {
