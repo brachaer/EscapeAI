@@ -59,12 +59,12 @@ def process_action(data):
     current_state = game_state.get_state(state_id)
     if not current_state:
         return {"error": "Invalid state_id"}, 400
-    
+
     chosen_option = next((opt for opt in current_state['options'] if opt['id'] == data.get('choice')), None)
     if not chosen_option:
         print(f"Invalid choice received: {data.get('choice')} for state_id: {state_id}")
         return {"error": "Invalid choice"}, 400
-
+    
     if chosen_option and chosen_option['is_exit']:
         result = process_game_exit({
             "name": current_state['name'],

@@ -1,58 +1,59 @@
-import pytest
-from bson import ObjectId
-from app.game_logic import start_game, process_action, get_validated_state_id
+import unittest
+from unittest.mock import MagicMock
+from app.game_logic import start_game, process_action
+from app.models import GameState
 
-VALID_OBJECT_ID = ObjectId()
-INVALID_OBJECT_ID = "invalid_id"
-
-@pytest.fixture
-def mock_dependencies(mocker):
-    mocker.patch('app.game_logic.generate_room_description', return_value="Room description")
-    mocker.patch('app.game_logic.extract_description_and_options', return_value=("Description", [{"id": "1", "description": "Option 1", "is_exit": False}]))
-    mocker.patch('app.game_logic.save_initial_game_state', return_value=ObjectId())
-    mocker.patch('app.game_logic.get_validated_state_id', return_value=VALID_OBJECT_ID)
-    mocker.patch('app.models.GameState.get_state', return_value={
-        "name": "Player",
-        "current_state": "Current state",
-        "options": [{"id": "1", "description": "Option 1", "is_exit": False}, {"id": "exit", "description": "Exit", "is_exit": True}],
-        "theme": "Fantasy",
-        "difficulty": "Easy"
-    })
-    mocker.patch('app.game_logic.process_user_action', return_value="New description")
-    mocker.patch('app.utils.extract_description_and_options', return_value=("New description", []))
-
-@pytest.mark.parametrize("input_id, expected", [
-    (str(VALID_OBJECT_ID), VALID_OBJECT_ID),
-    (VALID_OBJECT_ID, VALID_OBJECT_ID),
-    (INVALID_OBJECT_ID, None)
-])
-def test_get_validated_state_id(input_id, expected):
-    result = get_validated_state_id(input_id)
-    assert result == expected, f"Expected {expected} for input {input_id}"
-
-@pytest.mark.parametrize("input_data", [
-    {"name": "Player", "theme": "Fantasy", "difficulty": "Easy", "lang": "en"},
-    {"name": "Spieler", "theme": "Sci-Fi", "difficulty": "Hard", "lang": "de"},
-])
-def test_start_game(app, mock_dependencies, input_data):
-    with app.app_context():
-        result = start_game(input_data)
+class TestGameFunctions(unittest.TestCase):
     
-    required_keys = ["message", "description", "options", "state_id"]
-    assert all(key in result for key in required_keys), "Missing keys in start_game result"
+    def setUp(self):
+        self.mock_game_state = MagicMock(spec=GameState)
+        self.mock_game_state.get_state.return_value = {
+            'name': 'Player1',
+            'current_state': 'You find yourself in a dimly lit room.',
+            'theme': 'dark',
+            'difficulty': 'easy',
+            'options': [{'id': 'valid_choice', 'is_exit': False}]
+        }
+        self.mock_game_state.save_state.return_value.inserted_id = '60c72b2f5f8c8a1c88d6e23e' 
+        self.mock_game_state.update_state.return_value = True
 
-@pytest.mark.parametrize("action_data, expected_result", [
-    (
-        {"state_id": str(VALID_OBJECT_ID), "lang": "en", "choice": "1"},
-        {"description": "New description", "options": [], "exit": False}
-    ),
-    (
-        {"state_id": str(VALID_OBJECT_ID), "lang": "en", "choice": "exit"},
-        {"description": "Congratulations, You've escaped the room.", "options": [], "exit": True}
-    ),
-])
-def test_process_action(app, mock_dependencies, action_data, expected_result):
-    with app.app_context():
-        result = process_action(action_data)
-    
-    assert result == expected_result, f"Expected result to be {expected_result}, got {result}"
+    def test_process_action_invalid_choice(self):
+        data = {
+            'state_id': '60c72b2f5f8c8a1c88d6e23e',  
+            'choice': 'invalid_choice',
+            'lang': 'en'
+        }
+        result = process_action(data)
+        self.assertEqual(result, {'error': 'Invalid choice'}, "Expected error for invalid choice")
+
+    def test_process_action_invalid_state_id(self):
+        data = {
+            'state_id': 'invalid_state_id',
+            'choice': 'valid_choice',
+            'lang': 'en'
+        }
+        result = process_action(data)
+        self.assertEqual(result, {'error': 'Invalid state_id format'}, "Expected error for invalid state_id format")
+
+    def test_process_action_with_valid_state(self):
+        data = {
+            'state_id': '60c72b2f5f8c8a1c88d6e23e', 
+            'choice': 'valid_choice',
+            'lang': 'en'
+        }
+        result = process_action(data)
+        self.assertIn('description', result, "Expected description in valid choice result")
+
+    def test_start_game_success(self):
+        data = {
+            'name': 'Player1',
+            'theme': 'dark',
+            'difficulty': 'easy',
+            'lang': 'en'
+        }
+        result = start_game(data)
+        self.assertIn('description', result, "Expected description in start game result")
+        self.assertEqual(result['description'], 'Expected updated description here.', "Expected specific description")
+
+if __name__ == '__main__':
+    unittest.main()

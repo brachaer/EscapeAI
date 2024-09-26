@@ -17,7 +17,7 @@ def extract_description_and_options(text):
     else:
         description = '\n'.join(lines[:3])
         options_text = '\n'.join(lines[3:])
-    
+
     return description, parse_options(options_text)
 
 def parse_options(options_text):

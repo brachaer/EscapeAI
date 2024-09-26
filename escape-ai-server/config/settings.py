@@ -8,4 +8,3 @@ class Config:
     MONGO_URI = os.environ.get("MONGO_URI")
     MODEL_NAME = "gpt-4o-mini"
     TEMPERATURE = 0.7
-    
